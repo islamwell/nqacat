@@ -38,7 +38,10 @@ function App() {
                             <Search />
                         </Route>
                         <Route exact path="/favorites">
+                            <div className="fav-redirect-container">
                             <Favorite />
+                            </div>    
+                        
                         </Route>
                         <Route exact path="/">
                             <Home />
