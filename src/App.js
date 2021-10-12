@@ -9,6 +9,8 @@ import Search from "./containers/search";
 import Favorite from "./components/Favorite/Favorite"
 import Cache from "./components/Cache/Cache"
 import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
+import Grid from "@material-ui/core/Grid";
+import { Box, Container, useTheme } from "@material-ui/core";
 
 const theme = createMuiTheme({
     typography: {
@@ -42,7 +44,7 @@ function App() {
                             <div className="fav-redirect-container">
                             <Grid item xs={12} md={6}>
             <Box className={classes.title} mb={3} fontSize="h4.fontSize" fontWeight="fontWeightBold">
-              Favoritess
+              Favorites
             </Box>
             <Favorite />
             </Grid>
