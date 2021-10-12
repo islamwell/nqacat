@@ -267,10 +267,10 @@ export default function ListItem({ data, currentPlayingPosition }) {
                 className="btn-link"
                 onClick={(e) => {
                   notify()
-                  e.target.style.color = "rgb(29,161,245)";
+                  e.target.style.color = "rgb(29,95,245)";
                   setTimeout(() => {
-                    e.target.style.color = "#777";
-                  }, 2000);
+                    e.target.style.color = "white";
+                  }, 1000);
                   navigator.clipboard.writeText(link);
                 }}
                 size="small"

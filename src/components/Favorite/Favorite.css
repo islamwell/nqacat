@@ -128,7 +128,14 @@ flex: 1;
     display: flex;
     width: 100%;
     padding: 10px 4px 10px 4px;
-    justify-content: center;
+    justify-content: space-evenly;
     align-items: center;
     flex-wrap: wrap;
+}
+.btn-link{
+    background-color: rgb(250,80,120) !important;
+    padding: 0 2px 0 2px;
+}
+.btn-link>*{
+    color: white;
 }

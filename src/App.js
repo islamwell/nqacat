@@ -40,8 +40,18 @@ function App() {
                         </Route>
                         <Route exact path="/favorites">
                             <div className="fav-redirect-container">
-                            <Favorite />
-                            <Cache />
+                            <Grid item xs={12} md={6}>
+            <Box className={classes.title} mb={3} fontSize="h4.fontSize" fontWeight="fontWeightBold">
+              Favoritess
+            </Box>
+            <Favorite />
+            </Grid>
+          <Grid item xs={12} md={6}>
+            <Box className={classes.title} mb={3} fontSize="h4.fontSize" fontWeight="fontWeightBold">
+              Cache
+            </Box>
+            <Cache />
+            </Grid>
                             </div>    
                         </Route>
                         <Route exact path="/">
