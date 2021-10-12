@@ -124,12 +124,7 @@ export default function Home() {
             </Box>
             <Favorite />
             </Grid>
-          <Grid item xs={12} md={12}>
-            <Box className={classes.title} mb={3} fontSize="h4.fontSize" fontWeight="fontWeightBold">
-              Cached
-            </Box>
-            <Cache />
-            </Grid>
+          
         </Grid>
           </Grid>
       </Container>

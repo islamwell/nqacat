@@ -52,7 +52,7 @@ function Cache() {
     <div className="favorite-container">
       {cache.length === 0 && (
                 <Box display="flex" justifyContent="center" alignItems="center" my={10}>
-                    No cache...
+                    No cached...
                 </Box>
             )}
       {cache
