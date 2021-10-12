@@ -11,6 +11,7 @@ import Cache from "./components/Cache/Cache"
 import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import { Box, Container, useTheme } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
 
 const theme = createMuiTheme({
     typography: {
@@ -20,11 +21,21 @@ const theme = createMuiTheme({
         primary: {
             main: "#179992",
         },
-    },title: {
-        color: theme.palette.primary.dark,
-      }
+    }
 });
-
+const useStyles = makeStyles((theme) => ({
+    
+    title: {
+      color: theme.palette.primary.dark,
+    },
+    
+    recentContainer: {
+      padding: theme.spacing(3),
+      borderRadius: 10,
+    },
+    
+  }));
+  
 function App() {
     return (
         <ThemeProvider theme={theme}>
