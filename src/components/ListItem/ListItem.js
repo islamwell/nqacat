@@ -3,7 +3,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { Box, IconButton, Paper } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
 import { addToDowanloadingQueue } from "../../store/slices/downloadSlice";
-import { changeURL } from "../../store/slices/playerSlice";
+import { changeCache, changeURL } from "../../store/slices/playerSlice";
 import { changeFav } from "../../store/slices/playerSlice";
 import { CheckCircleOutlineOutlined } from "@material-ui/icons";
 import Facebook from "@material-ui/icons/Facebook";
@@ -104,6 +104,17 @@ export default function ListItem({ data, currentPlayingPosition }) {
       dispatch(
         addToDowanloadingQueue({ name: name, id: id, link: link, progress: 0 })
       );
+      dispatch(
+        changeCache({
+          name: name,
+          link: link,
+          id: id,
+          image: image,
+          categoryId: categoryId || category_id,
+          currentPlayingPosition: currentPlayingPosition,
+        })
+      );
+
     }
   };
 

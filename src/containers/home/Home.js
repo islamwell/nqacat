@@ -16,6 +16,7 @@ import { useData } from "../../hooks/useData";
 import "./style.css"; // this style for the topchat
 import { fetchTopChart } from "../../store/slices/playerSlice";
 import Favorite from "../../components/Favorite/Favorite";
+import Cache from "../../components/Cache/Cache";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -119,9 +120,15 @@ export default function Home() {
             <RecentlyPlayed />
           <Grid item xs={12} md={12}>
             <Box className={classes.title} mb={3} fontSize="h4.fontSize" fontWeight="fontWeightBold">
-              Favorites
+              Favoritess
             </Box>
             <Favorite />
+            </Grid>
+          <Grid item xs={12} md={12}>
+            <Box className={classes.title} mb={3} fontSize="h4.fontSize" fontWeight="fontWeightBold">
+              Cache
+            </Box>
+            <Cache />
             </Grid>
         </Grid>
           </Grid>

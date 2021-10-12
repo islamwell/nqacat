@@ -22,6 +22,7 @@ export const playerSlice = createSlice({
         categoryId: null,
         recentlyPlayed: [],
         favorite:[],
+        cache:[],
         topChart: [],
         currentAudioList: [],
         currentPlayingPosition: "home",
@@ -128,6 +129,31 @@ export const playerSlice = createSlice({
                 });
             }
         },
+        changeCache: (state, action) => {
+            state.link = action.payload.link;
+            state.name = action.payload.name;
+            state.id = action.payload.id;
+            state.categoryId = action.payload.categoryId;
+            state.open = false;
+            state.currentPlayingPosition = action.payload.currentPlayingPosition;
+
+            if (state.cache.find((item) => item.id === action.payload.id)){
+                let a=state.cache.filter((item) => item.id !== action.payload.id)
+                // console.log("!!!!!!!!!!!!!!!!!!!",a)
+                state.cache = a
+                return
+            }
+
+            else {
+                state.cache.push({
+                    link: action.payload.link,
+                    name: action.payload.name,
+                    id: action.payload.id,
+                    image: action.payload.image,
+                    categoryId: action.payload.categoryId,
+                });
+            }
+        },
     },
 
     extraReducers: (builder) => {
@@ -138,6 +164,6 @@ export const playerSlice = createSlice({
     
 });
 
-export const { play, toggle, closePlayer, changeURL,changeFav ,updateCurrentAudioList, playNextOrPrevious } = playerSlice.actions;
+export const { play, toggle, closePlayer, changeURL,changeFav,changeCache,updateCurrentAudioList, playNextOrPrevious } = playerSlice.actions;
 
 export default playerSlice.reducer;

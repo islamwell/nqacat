@@ -7,6 +7,7 @@ import Player from "./containers/player";
 import Layout from "./containers/layout";
 import Search from "./containers/search";
 import Favorite from "./components/Favorite/Favorite"
+import Cache from "./components/Cache/Cache"
 import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
 
 const theme = createMuiTheme({
@@ -40,6 +41,7 @@ function App() {
                         <Route exact path="/favorites">
                             <div className="fav-redirect-container">
                             <Favorite />
+                            <Cache />
                             </div>    
                         </Route>
                         <Route exact path="/">
