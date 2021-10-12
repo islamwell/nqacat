@@ -86,7 +86,7 @@ function Cache() {
          
           </Box>
           <IconButton onClick={()=>handleCache(item.name, item.link, item.id, item.image, item.categoryId)} className="fav-icon-container" size="small">
-            <CheckCircleOutlineOutlined style={{color:"green"}} />        
+            <CheckCircleOutlineOutlined className="check-cache-icon" />        
           </IconButton>
         </Box>
       ))}

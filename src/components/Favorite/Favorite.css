@@ -138,3 +138,9 @@ flex: 1;
 .btn-link>*{
     color: white;
 }
+.check-cache-icon{
+    color:white;
+    background:rgb(16, 107, 102);
+    border-radius: 100%;
+
+}
