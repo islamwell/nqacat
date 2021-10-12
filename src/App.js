@@ -20,7 +20,9 @@ const theme = createMuiTheme({
         primary: {
             main: "#179992",
         },
-    },
+    },title: {
+        color: theme.palette.primary.dark,
+      }
 });
 
 function App() {
