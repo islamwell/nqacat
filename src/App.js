@@ -26,7 +26,7 @@ const theme = createMuiTheme({
 const useStyles = makeStyles((theme) => ({
     
     title: {
-      color: theme.palette.primary.dark,
+      color: "rgb(16, 107, 102)",
     },
     
     recentContainer: {
@@ -57,15 +57,15 @@ function App() {
                         </Route>
                         <Route exact path="/favorites">
                             <div className="fav-redirect-container">
-                            <Grid item xs={12} md={6}>
+                            <Grid item xs={12} md={4}>
             <Box className={classes.title} mb={3} fontSize="h4.fontSize" fontWeight="fontWeightBold">
               Favorites
             </Box>
             <Favorite />
             </Grid>
-          <Grid item xs={12} md={6}>
+          <Grid item xs={12} md={4}>
             <Box className={classes.title} mb={3} fontSize="h4.fontSize" fontWeight="fontWeightBold">
-              Cache
+              Cached
             </Box>
             <Cache />
             </Grid>
