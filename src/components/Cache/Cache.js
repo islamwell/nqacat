@@ -3,7 +3,7 @@ import { Box, IconButton } from "@material-ui/core";
 import Image from "../Image";
 import { makeStyles } from "@material-ui/core/styles";
 import { changeURL } from "../../store/slices/playerSlice";
-import { changeCache } from "../../store/slices/playerSlice";
+import { changeCache } from "../../store/slices/componentSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';

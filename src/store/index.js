@@ -1,6 +1,7 @@
 import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
 import playerReducer from "../store/slices/playerSlice";
 import downloadReducer from "./slices/downloadSlice";
+import componentReducer from "./slices/componentSlice";
 import { persistStore, persistReducer, FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import { combineReducers } from "redux";
@@ -8,13 +9,18 @@ import { combineReducers } from "redux";
 const rootPersistConfig = {
     key: "root",
     storage: storage,
-    blacklist: ["player", "download"],
+    blacklist: ["player", "download","component"],
 };
 
 const playerPersistConfig = {
     key: "player",
     storage: storage,
-    whitelist: ["recentlyPlayed", "topChart","favorite","cache"],
+    whitelist: ["recentlyPlayed", "topChart"],
+};
+const componentPersistConfig = {
+    key: "component",
+    storage: storage,
+    whitelist: ["favorite", "cache"],
 };
 
 const downalodPersistConfig = {
@@ -25,6 +31,7 @@ const downalodPersistConfig = {
 
 const rootReducer = combineReducers({
     player: persistReducer(playerPersistConfig, playerReducer),
+    component: persistReducer(componentPersistConfig, componentReducer),
     download: persistReducer(downalodPersistConfig, downloadReducer),
 });
 

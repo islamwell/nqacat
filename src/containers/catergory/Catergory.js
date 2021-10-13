@@ -13,7 +13,7 @@ import { getCategoryById } from "../../db/services";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import {IconButton} from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
-import { changeFav } from "../../store/slices/playerSlice";
+import { changeFav } from "../../store/slices/componentSlice";
 
 const useStyles = makeStyles((theme) => ({
     root: {

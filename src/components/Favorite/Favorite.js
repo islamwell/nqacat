@@ -5,7 +5,7 @@ import Image from "../Image";
 import { makeStyles } from "@material-ui/core/styles";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import { changeURL } from "../../store/slices/playerSlice";
-import { changeFav } from "../../store/slices/playerSlice";
+import { changeFav } from "../../store/slices/componentSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
 
@@ -40,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
 function Favorite() {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const { favorite } = useSelector((state) => state.player);
+  const { favorite } = useSelector((state) => state.component);
   const history = useHistory();
   const handlePlay = (name, link, id, image, categoryId) => {
     dispatch(changeURL({ name, link, id, image, categoryId,currentPlayingPosition: "home" }));
