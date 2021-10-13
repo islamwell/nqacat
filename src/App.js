@@ -57,13 +57,13 @@ function App() {
                         </Route>
                         <Route exact path="/favorites">
                             <div className="fav-redirect-container">
-                            <Grid item xs={12} md={4}>
+                            <Grid style={{overflow:"visible"}} item xs={12} md={4}>
             <Box className={classes.title} mb={3} fontSize="h4.fontSize" fontWeight="fontWeightBold">
               Favorites
             </Box>
             <Favorite />
             </Grid>
-          <Grid item xs={12} md={4}>
+          <Grid style={{overflow:"visible"}} item xs={12} md={4}>
             <Box className={classes.title} mb={3} fontSize="h4.fontSize" fontWeight="fontWeightBold">
               Cached
             </Box>

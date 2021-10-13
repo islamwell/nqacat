@@ -6,8 +6,7 @@ import { changeURL } from "../../store/slices/playerSlice";
 import { changeCache } from "../../store/slices/playerSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
-// import { CheckCircleOutlineOutlined } from "@material-ui/icons";
-import CheckCircleOutlineOutlined from "@material-ui/icons/CheckCircleOutlineOutlined";
+import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 
 const useStyles = makeStyles((theme) => ({
   mainContainer: {
@@ -85,8 +84,8 @@ function Cache() {
      }}>       {item.name}</p>
          
           </Box>
-          <IconButton onClick={()=>handleCache(item.name, item.link, item.id, item.image, item.categoryId)} className="fav-icon-container" size="small">
-            <CheckCircleOutlineOutlined className="check-cache-icon" />        
+          <IconButton  onClick={()=>handleCache(item.name, item.link, item.id, item.image, item.categoryId)} className="fav-icon-container" size="small">
+            <CheckCircleIcon className="check-cache-icon" />        
           </IconButton>
         </Box>
       ))}

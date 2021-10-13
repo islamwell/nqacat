@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { addToDowanloadingQueue } from "../../store/slices/downloadSlice";
 import { changeCache, changeURL } from "../../store/slices/playerSlice";
 import { changeFav } from "../../store/slices/playerSlice";
-import { CheckCircleOutlineOutlined } from "@material-ui/icons";
+import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import Facebook from "@material-ui/icons/Facebook";
 import Twitter from "@material-ui/icons/Twitter";
 import Email from "@material-ui/icons/Mail";
@@ -230,8 +230,8 @@ export default function ListItem({ data, currentPlayingPosition }) {
             onClick={handleDownload}
             size="small"
           >
-            <CheckCircleOutlineOutlined
-              style={isDownloaded ? { color: "green" } : { color: "gray" }}
+            <CheckCircleIcon
+              style={isDownloaded ? { color: "rgb(16, 180, 102)" } : { color: "#888" }}
             />
           </IconButton>
           <IconButton size="small">
@@ -247,7 +247,7 @@ export default function ListItem({ data, currentPlayingPosition }) {
           <IconButton onClick={handleFavorite} size="small">
             <FavoriteBorderIcon
               style={
-                present ? { color: "rgb(240,100,100)" } : { color: "#777" }
+                present ? { color: "rgb(240,100,100)" } : { color: "#888" }
               }
             />
           </IconButton>
@@ -344,8 +344,8 @@ export default function ListItem({ data, currentPlayingPosition }) {
                 data-tip="Share on Email"
                 className="btn-email"
                 href={
-                  "mailto:?subject=Assalamo alaykum. What do you think of this audio?&body=More enlightening signs at " +
-                  link
+                  "mailto:?subject=Assalamo alaykum. What do you think of this audio?&body="+link +"%0D%0A %0D%0A"+
+                  "More enlightening signs at "+"https://Listen.NurulQuran.com " 
                 }
                 title="Share by Email"
               >

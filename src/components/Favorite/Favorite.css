@@ -79,7 +79,7 @@ flex: 1;
     ;
 }
 .download-icon-container>*{
-    color: #777 !important; 
+    color: #888 !important; 
     font-size: 1.2rem;
     padding: 0;
     margin: 0 0 -5px 0;
@@ -130,6 +130,7 @@ flex: 1;
     padding: 10px 4px 10px 4px;
     justify-content: space-evenly;
     flex-wrap: wrap;
+    box-sizing: border-box;
 }
 .btn-link{
     background-color: rgb(250,80,120) !important;
@@ -139,8 +140,8 @@ flex: 1;
     color: white;
 }
 .check-cache-icon{
-    color:white;
-    background:rgb(16, 107, 102);
+    color:rgb(16, 180, 102);
+    background: white;
     border-radius: 100%;
 
 }

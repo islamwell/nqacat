@@ -14,7 +14,7 @@ const rootPersistConfig = {
 const playerPersistConfig = {
     key: "player",
     storage: storage,
-    whitelist: ["recentlyPlayed", "topChart","favorite"],
+    whitelist: ["recentlyPlayed", "topChart","favorite","cache"],
 };
 
 const downalodPersistConfig = {
