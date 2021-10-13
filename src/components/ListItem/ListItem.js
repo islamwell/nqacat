@@ -105,17 +105,6 @@ export default function ListItem({ data, currentPlayingPosition }) {
       dispatch(
         addToDowanloadingQueue({ name: name, id: id, link: link, progress: 0 })
       );
-      dispatch(
-        changeCache({
-          name: name,
-          link: link,
-          id: id,
-          image: image,
-          categoryId: categoryId || category_id,
-          currentPlayingPosition: currentPlayingPosition,
-        })
-      );
-
     }
   };
 
@@ -173,6 +162,18 @@ export default function ListItem({ data, currentPlayingPosition }) {
     }
   }, [id, favorite]);
 
+  function handleCache() {
+    dispatch(
+      changeCache({
+        name: name,
+        link: link,
+        id: id,
+        image: image,
+        categoryId: categoryId || category_id,
+        currentPlayingPosition: currentPlayingPosition,
+      })
+    );
+  }
   function handleFavorite() {
     dispatch(
       changeFav({
@@ -228,7 +229,7 @@ export default function ListItem({ data, currentPlayingPosition }) {
         <Box display="flex" alignItems="center" justifyContent="flex-start">
           <IconButton
             disabled={downloadingIds.includes(id)}
-            onClick={handleDownload}
+            onClick={handleDownload,handleCache}
             size="small"
           >
             <CheckCircleIcon
