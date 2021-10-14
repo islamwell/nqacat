@@ -13,7 +13,7 @@ import { getCategoryById } from "../../db/services";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import {IconButton} from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
-import { changeFav } from "../../store/slices/playerSlice";
+import { changeFav } from "../../store/slices/favoriteSlice";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -91,12 +91,12 @@ export default function Home() {
 
 
     const dispatch = useDispatch();
-    const { favorite } = useSelector((state) => state.player);
+    const { favorite } = useSelector((state) => state.favorite);
     const [present, setPresent] = useState(false);
 
     function handleFavorite(){
         // present?setPresent(false):setPresent(true);
-        console.log("this is the category data***********:",categoryDetails)
+        // console.log("this is the category data***********:",categoryDetails)
             dispatch(
                 changeFav({
                   name: categoryDetails.name,

@@ -4,7 +4,7 @@ import { Box, IconButton, Paper } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
 import { addToDowanloadingQueue } from "../../store/slices/downloadSlice";
 import { changeURL } from "../../store/slices/playerSlice";
-import { changeFav } from "../../store/slices/playerSlice";
+import { changeFav } from "../../store/slices/favoriteSlice";
 
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 
@@ -150,7 +150,7 @@ export default function ListItem({ data, currentPlayingPosition }) {
   }, [downloadingIds, link]);
 
   //  favorite category related code
-  const { favorite } = useSelector((state) => state.player);
+  const { favorite } = useSelector((state) => state.favorite);
   const [present, setPresent] = useState(false);
   const [display, setDisplay] = useState(true);
   const notify = () => toast.success('Link has been copied', {
