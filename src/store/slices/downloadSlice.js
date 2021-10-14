@@ -53,6 +53,7 @@ export const downalodSlice = createSlice({
         audioListDownloadProgress: 0,
         audioListDownaloding: false,
         downloadingQueue: [],
+        cachelist: [],
         downloadingIds: [],
         offlineMode: false,
     },
@@ -64,6 +65,7 @@ export const downalodSlice = createSlice({
         addToDowanloadingQueue: (state, action) => {
             state.downloadingQueue.push(action.payload);
             state.downloadingIds.push(action.payload.id);
+            state.cachelist.push(action.payload);
         },
 
         updateDownloadProgress: (state, action) => {
@@ -74,6 +76,14 @@ export const downalodSlice = createSlice({
         updateAudioListDownloadProgress: (state, action) => {
             const percentage = (action.payload.page * 100) / action.payload.allpage;
             state.audioListDownloadProgress = Math.round(percentage);
+        },
+        changeCache: (state,action) =>{
+            if (state.cachelist.find((item) => item.id === action.payload.id)){
+                let a=state.cachelist.filter((item) => item.id !== action.payload.id)
+                // console.log("!!!!!!!!!!!!!!!!!!!",a)
+                state.cachelist = a
+                return
+            }
         },
     },
 
@@ -106,6 +116,6 @@ export const downalodSlice = createSlice({
     },
 });
 
-export const { addToDowanloadingQueue, updateOfflineStatus } = downalodSlice.actions;
+export const { addToDowanloadingQueue, updateOfflineStatus,changeCache } = downalodSlice.actions;
 
 export default downalodSlice.reducer;

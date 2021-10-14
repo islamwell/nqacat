@@ -1,14 +1,13 @@
-import {React,useState} from "react";
+import React from "react";
 import { Box, IconButton } from "@material-ui/core";
 import Image from "../Image";
 import { makeStyles } from "@material-ui/core/styles";
 import { changeURL } from "../../store/slices/playerSlice";
-import { changeCache } from "../../store/slices/componentSlice";
+// import { changeCache } from "../../store/slices/playerSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
-
-import { addToDowanloadingQueue } from "../../store/slices/downloadSlice";
+import { changeCache } from "../../store/slices/downloadSlice";
 
 const useStyles = makeStyles((theme) => ({
   mainContainer: {
@@ -41,40 +40,22 @@ const useStyles = makeStyles((theme) => ({
 function Cache() {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const { cache } = useSelector((state) => state.component);
+  const { cachelist } = useSelector((state) => state.download);
   const history = useHistory();
   const handlePlay = (name, link, id, image, categoryId) => {
     dispatch(changeURL({ name, link, id, image, categoryId,currentPlayingPosition: "home" }));
 };
   const handleCache = (name, link, id, image, categoryId) => {
     dispatch(changeCache({ name, link, id, image, categoryId,currentPlayingPosition: "home" }));
-    handleDownload(name, link, id, image, categoryId)
-  };
-
-const [isDownloaded, setIsDownloaded] = useState(false);
-const { downloadingIds } = useSelector((state) => state.download);
-const handleDownload = async (name, link, id, image, categoryId) => {
-  if (isDownloaded) {
-    try {
-      const cache = await caches.open("audio_cache");
-      const res = await cache.delete(new Request(link));
-      if (res) setIsDownloaded(false);
-    } catch (error) {}
-  } else {
-    dispatch(
-      addToDowanloadingQueue({ name: name, id: id, link: link, progress: 0 })
-    );
-  }
 };
-
   return (
     <div className="favorite-container">
-      {cache.length === 0 && (
+      {cachelist.length === 0 && (
                 <Box display="flex" justifyContent="center" alignItems="center" my={10}>
                     No cached...
                 </Box>
             )}
-      {cache
+      {cachelist
       .slice(0)
       .reverse()
       .map((item, key) => (
@@ -104,8 +85,8 @@ const handleDownload = async (name, link, id, image, categoryId) => {
      }}>       {item.name}</p>
          
           </Box>
-          <IconButton  onClick={()=>handleCache(item.name, item.link, item.id, item.image, item.categoryId)} className="fav-icon-container" size="small">
-            <CheckCircleIcon className="check-cache-icon" />        
+          <IconButton onClick={()=>handleCache(item.name, item.link, item.id, item.image, item.categoryId)}  className="fav-icon-container" size="small">
+           <CheckCircleIcon className="check-cache-icon" />    
           </IconButton>
         </Box>
       ))}

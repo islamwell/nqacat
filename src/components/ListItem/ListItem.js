@@ -3,10 +3,11 @@ import { makeStyles } from "@material-ui/core/styles";
 import { Box, IconButton, Paper } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
 import { addToDowanloadingQueue } from "../../store/slices/downloadSlice";
-import {changeURL } from "../../store/slices/playerSlice";
-import {changeCache } from "../../store/slices/componentSlice";
-import { changeFav } from "../../store/slices/componentSlice";
+import { changeURL } from "../../store/slices/playerSlice";
+import { changeFav } from "../../store/slices/playerSlice";
+
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
+
 import Facebook from "@material-ui/icons/Facebook";
 import Twitter from "@material-ui/icons/Twitter";
 import Email from "@material-ui/icons/Mail";
@@ -103,7 +104,14 @@ export default function ListItem({ data, currentPlayingPosition }) {
       } catch (error) {}
     } else {
       dispatch(
-        addToDowanloadingQueue({ name: name, id: id, link: link, progress: 0 })
+        addToDowanloadingQueue({ 
+          name: name, 
+          id: id, 
+          link: link,
+          image: image,
+          categoryId: categoryId || category_id,
+          currentPlayingPosition: currentPlayingPosition, 
+          progress: 0 })
       );
     }
   };
@@ -142,7 +150,7 @@ export default function ListItem({ data, currentPlayingPosition }) {
   }, [downloadingIds, link]);
 
   //  favorite category related code
-  const { favorite } = useSelector((state) => state.component);
+  const { favorite } = useSelector((state) => state.player);
   const [present, setPresent] = useState(false);
   const [display, setDisplay] = useState(true);
   const notify = () => toast.success('Link has been copied', {
@@ -162,18 +170,6 @@ export default function ListItem({ data, currentPlayingPosition }) {
     }
   }, [id, favorite]);
 
-  function handleCache() {
-    dispatch(
-      changeCache({
-        name: name,
-        link: link,
-        id: id,
-        image: image,
-        categoryId: categoryId || category_id,
-        currentPlayingPosition: currentPlayingPosition,
-      })
-    );
-  }
   function handleFavorite() {
     dispatch(
       changeFav({
@@ -229,11 +225,11 @@ export default function ListItem({ data, currentPlayingPosition }) {
         <Box display="flex" alignItems="center" justifyContent="flex-start">
           <IconButton
             disabled={downloadingIds.includes(id)}
-            onClick={handleDownload,handleCache}
+            onClick={handleDownload}
             size="small"
           >
-            <CheckCircleIcon
-              style={isDownloaded ? { color: "rgb(16, 180, 102)" } : { color: "#888" }}
+            <CheckCircleIcon className="check-cache-icon"
+              style={isDownloaded ? { color: "rgb(16, 180, 102)" } : { color: "gray" }}
             />
           </IconButton>
           <IconButton size="small">
@@ -249,7 +245,7 @@ export default function ListItem({ data, currentPlayingPosition }) {
           <IconButton onClick={handleFavorite} size="small">
             <FavoriteBorderIcon
               style={
-                present ? { color: "rgb(240,100,100)" } : { color: "#888" }
+                present ? { color: "rgb(240,100,100)" } : { color: "#777" }
               }
             />
           </IconButton>
@@ -269,10 +265,10 @@ export default function ListItem({ data, currentPlayingPosition }) {
                 className="btn-link"
                 onClick={(e) => {
                   notify()
-                  e.target.style.color = "rgb(29,95,245)";
+                  e.target.style.color = "rgb(29,161,245)";
                   setTimeout(() => {
-                    e.target.style.color = "white";
-                  }, 1000);
+                    e.target.style.color = "#777";
+                  }, 2000);
                   navigator.clipboard.writeText(link);
                 }}
                 size="small"
