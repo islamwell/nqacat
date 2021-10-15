@@ -7,8 +7,7 @@ import Player from "./containers/player";
 import Layout from "./containers/layout";
 import Search from "./containers/search";
 import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
-import { makeStyles } from '@material-ui/core/styles';
-import FavoritePage from "./containers/favoritePage/favoritePage";
+import FavoritePage from "./containers/favoritePage/FavoritePage";
 
 const theme = createMuiTheme({
   typography: {
@@ -20,19 +19,9 @@ const theme = createMuiTheme({
     },
   },
 });
-const useStyles = makeStyles((theme) => ({
-  title: {
-    color: "rgb(16, 107, 102)",
-  },
 
-  recentContainer: {
-    padding: theme.spacing(3),
-    borderRadius: 10,
-  },
-}));
 
 function App() {
-  const classes = useStyles();
 
   return (
     <ThemeProvider theme={theme}>

@@ -1,11 +1,23 @@
 import React from 'react'
-import Favorite from "./components/Favorite/Favorite";
-import Cache from "./components/Cache/Cache";
 import Grid from "@material-ui/core/Grid";
-import { Box, Container, useTheme } from "@material-ui/core";
+import { Box } from "@material-ui/core";
+import Cache from '../../components/Cache/Cache';
+import Favorite from '../../components/Favorite/Favorite';
+import { makeStyles } from '@material-ui/core/styles';
 
-
+const useStyles = makeStyles((theme) => ({
+    title: {
+      color: "rgb(16, 107, 102)",
+    },
+  
+    recentContainer: {
+      padding: theme.spacing(3),
+      borderRadius: 10,
+    },
+  }));
 function FavoritePage() {
+    const classes = useStyles();
+
     return (
         <div className="fav-redirect-container">
                 <Grid item xs={12} md={4}>
@@ -17,7 +29,7 @@ function FavoritePage() {
                   >
                     Favorites
                   </Box>
-                  <Favorite style={{overflow:"visible",maxHeight:"auto"}} />
+                  <Favorite />
                 </Grid>
                 <Grid  item xs={12} md={4}>
                   <Box
