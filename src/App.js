@@ -6,12 +6,9 @@ import Catergory from "./containers/catergory";
 import Player from "./containers/player";
 import Layout from "./containers/layout";
 import Search from "./containers/search";
-import Favorite from "./components/Favorite/Favorite";
-import Cache from "./components/Cache/Cache";
 import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
-import Grid from "@material-ui/core/Grid";
-import { Box, Container, useTheme } from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles } from '@material-ui/core/styles';
+import FavoritePage from "./containers/favoritePage/favoritePage";
 
 const theme = createMuiTheme({
   typography: {
@@ -52,30 +49,7 @@ function App() {
               <Search />
             </Route>
             <Route exact path="/favorites">
-              <div className="fav-redirect-container">
-                <Grid style={{ overflow: "visible" }} item xs={12} md={4}>
-                  <Box
-                    className={classes.title}
-                    mb={3}
-                    fontSize="h4.fontSize"
-                    fontWeight="fontWeightBold"
-                  >
-                    Favorites
-                  </Box>
-                  <Favorite />
-                </Grid>
-                <Grid style={{ overflow: "visible" }} item xs={12} md={4}>
-                  <Box
-                    className={classes.title}
-                    mb={3}
-                    fontSize="h4.fontSize"
-                    fontWeight="fontWeightBold"
-                  >
-                    Cached
-                  </Box>
-                  <Cache />
-                </Grid>
-              </div>
+              <FavoritePage />
             </Route>
             <Route exact path="/">
               <Home />

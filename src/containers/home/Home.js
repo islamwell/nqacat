@@ -10,13 +10,11 @@ import "swiper/components/pagination/pagination.min.css";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 
 import Pagination from "@material-ui/lab/Pagination";
-
 import { useData } from "../../hooks/useData";
 
 import "./style.css"; // this style for the topchat
 import { fetchTopChart } from "../../store/slices/playerSlice";
 import Favorite from "../../components/Favorite/Favorite";
-import Cache from "../../components/Cache/Cache";
 
 const useStyles = makeStyles((theme) => ({
   root: {

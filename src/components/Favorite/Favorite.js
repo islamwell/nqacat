@@ -1,4 +1,4 @@
-import React from "react";
+import { React, useState } from "react";
 import "./Favorite.css";
 import { Box, IconButton } from "@material-ui/core";
 import Image from "../Image";
@@ -8,6 +8,7 @@ import { changeURL } from "../../store/slices/playerSlice";
 import { changeFav } from "../../store/slices/favoriteSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
+import Pagination from "@material-ui/lab/Pagination";
 
 const useStyles = makeStyles((theme) => ({
   mainContainer: {
@@ -35,6 +36,10 @@ const useStyles = makeStyles((theme) => ({
     width: 50,
     borderRadius: 30,
   },
+  root: {
+    width: "100%",
+    backgroundColor: theme.palette.background.paper,
+  },
 }));
 
 function Favorite() {
@@ -43,53 +48,120 @@ function Favorite() {
   const { favorite } = useSelector((state) => state.favorite);
   const history = useHistory();
   const handlePlay = (name, link, id, image, categoryId) => {
-    dispatch(changeURL({ name, link, id, image, categoryId,currentPlayingPosition: "home" }));
-};
+    dispatch(
+      changeURL({
+        name,
+        link,
+        id,
+        image,
+        categoryId,
+        currentPlayingPosition: "home",
+      })
+    );
+  };
   const handleFavorite = (name, link, id, image, categoryId) => {
-    dispatch(changeFav({ name, link, id, image, categoryId,currentPlayingPosition: "home" }));
-};
+    dispatch(
+      changeFav({
+        name,
+        link,
+        id,
+        image,
+        categoryId,
+        currentPlayingPosition: "home",
+      })
+    );
+  };
+
+  const showPagination = favorite.length > 0;
+  const itemsPerPage = 10;
+  const [page, setPage] = useState(1);
+  const [noOfPages] = useState(Math.ceil(favorite.length / itemsPerPage));
+
+  const handleChange = (event, value) => {
+    setPage(value);
+  };
+
   return (
     <div className="favorite-container">
       {favorite.length === 0 && (
-                <Box display="flex" justifyContent="center" alignItems="center" my={10}>
-                    No favorite audios...
-                </Box>
-            )}
-      {favorite
-      .slice(0)
-      .reverse()
-      .map((item, key) => (
-        <Box
-          className={classes.itemContainer}
-          display="flex"
-          alignItems="center"
-          paddingTop={1}
-          paddingBottom={1}
-          key={key}
-        >
-          <Image src={item.image} className={classes.image} />
-
-          <Box
-            onClick={() => {
-              if(item.link!=="category-link"){
-                return handlePlay(item.name, item.link, item.id, item.image, item.categoryId)
-                }}}
-            className="fav-name-container"
-            marginLeft={2}
-            fontWeight="fontWeightMedium"
-            fontSize="body2.fontSize"
-          >
-            
-     <p onClick={()=>{
-       if(item.link==="category-link"){history.push("/category/"+item.id)}
-     }}>       {item.name}</p>
-         
-          </Box>
-          <IconButton onClick={()=>handleFavorite(item.name, item.link, item.id, item.image, item.categoryId)} className="fav-icon-container" size="small">
-            <FavoriteBorderIcon />
-          </IconButton>
+        <Box display="flex" justifyContent="center" alignItems="center" my={10}>
+          No favorite audios...
         </Box>
-      ))}
+      )}
+      {favorite
+        .slice((page - 1) * itemsPerPage, page * itemsPerPage)
+        .reverse()
+        .map((item, key) => (
+          <Box
+            className={classes.itemContainer}
+            display="flex"
+            alignItems="center"
+            paddingTop={1}
+            paddingBottom={1}
+            key={key}
+          >
+            <Image src={item.image} className={classes.image} />
+
+            <Box
+              onClick={() => {
+                if (item.link !== "category-link") {
+                  return handlePlay(
+                    item.name,
+                    item.link,
+                    item.id,
+                    item.image,
+                    item.categoryId
+                  );
+                }
+              }}
+              className="fav-name-container"
+              marginLeft={2}
+              fontWeight="fontWeightMedium"
+              fontSize="body2.fontSize"
+            >
+              <p
+                onClick={() => {
+                  if (item.link === "category-link") {
+                    history.push("/category/" + item.id);
+                  }
+                }}
+              >
+                {" "}
+                {item.name}
+              </p>
+            </Box>
+            <IconButton
+              onClick={() =>
+                handleFavorite(
+                  item.name,
+                  item.link,
+                  item.id,
+                  item.image,
+                  item.categoryId
+                )
+              }
+              className="fav-icon-container"
+              size="small"
+            >
+              <FavoriteBorderIcon />
+            </IconButton>
+          </Box>
+        ))}
+      {showPagination && (
+        <Box py={2} display="flex" justifyContent="flex-end">
+          <Pagination
+            count={noOfPages}
+            page={page}
+            onChange={handleChange}
+            defaultPage={1}
+            color="primary"
+            showFirstButton
+            showLastButton
+            variant="outlined"
+            shape="rounded"
+          />
+        </Box>
+      )}
     </div>
   );
 }
