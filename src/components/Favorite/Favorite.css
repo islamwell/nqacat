@@ -131,6 +131,7 @@ flex: 1;
     justify-content: space-evenly;
     flex-wrap: wrap;
     box-sizing: border-box;
+    padding-bottom:129px
 }
 .fav-redirect-container>*>:last-child{
     overflow: visible !important;
