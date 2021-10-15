@@ -7,6 +7,7 @@ import Player from "./containers/player";
 import Layout from "./containers/layout";
 import Search from "./containers/search";
 import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
+
 import FavoritePage from "./containers/favoritePage/FavoritePage";
 
 const theme = createMuiTheme({
