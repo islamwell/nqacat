@@ -8,7 +8,7 @@ import Layout from "./containers/layout";
 import Search from "./containers/search";
 import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
 import { makeStyles } from '@material-ui/core/styles';
-import FavoritePage from "./containers/favoritePage/favoritePage";
+import FavoritePage from "./containers/favoritePage";
 
 const theme = createMuiTheme({
   typography: {
