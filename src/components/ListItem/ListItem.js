@@ -6,7 +6,7 @@ import { addToDowanloadingQueue } from "../../store/slices/downloadSlice";
 import { changeURL } from "../../store/slices/playerSlice";
 import { changeFav } from "../../store/slices/favoriteSlice";
 
-import CheckCircleIcon from '@material-ui/icons/CheckCircle';
+import CheckCircleIcon from "@material-ui/icons/CheckCircle";
 
 import Facebook from "@material-ui/icons/Facebook";
 import Twitter from "@material-ui/icons/Twitter";
@@ -20,8 +20,8 @@ import PlayCircleOutlineIcon from "@material-ui/icons/PlayCircleOutline";
 import LinkIcon from "@material-ui/icons/Link";
 import parse from "html-react-parser";
 import ReactTooltip from "react-tooltip";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 import { Image } from "../../components";
 const useStyles = makeStyles((theme) => ({
@@ -104,14 +104,15 @@ export default function ListItem({ data, currentPlayingPosition }) {
       } catch (error) {}
     } else {
       dispatch(
-        addToDowanloadingQueue({ 
-          name: name, 
-          id: id, 
+        addToDowanloadingQueue({
+          name: name,
+          id: id,
           link: link,
           image: image,
           categoryId: categoryId || category_id,
-          currentPlayingPosition: currentPlayingPosition, 
-          progress: 0 })
+          currentPlayingPosition: currentPlayingPosition,
+          progress: 0,
+        })
       );
     }
   };
@@ -153,14 +154,16 @@ export default function ListItem({ data, currentPlayingPosition }) {
   const { favorite } = useSelector((state) => state.favorite);
   const [present, setPresent] = useState(false);
   const [display, setDisplay] = useState(true);
-  const notify = () => toast.success('Link has been copied', {
-    position: "bottom-left",
-    autoClose: 2000,
-    hideProgressBar: true,
-    closeOnClick: true,
-    pauseOnHover: true,
-    draggable: true,
-    progress: undefined,
+  const [fileType, setFileType] = useState("audio/mp3");
+  const notify = () =>
+    toast.success("Link has been copied", {
+      position: "bottom-left",
+      autoClose: 2000,
+      hideProgressBar: true,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
     });
   useEffect(() => {
     if (favorite.find((item) => item.id === id)) {
@@ -169,6 +172,16 @@ export default function ListItem({ data, currentPlayingPosition }) {
       setPresent(false);
     }
   }, [id, favorite]);
+  useEffect(() => {
+    if (link.slice(-3) === "mp4") {
+      setFileType("video/mp4");
+    } else {
+      setFileType("audio/mp3");
+    }
+  }, []);
+
+// ##########################
+
 
   function handleFavorite() {
     dispatch(
@@ -182,6 +195,7 @@ export default function ListItem({ data, currentPlayingPosition }) {
       })
     );
   }
+
   return (
     <Paper variant="outlined" className={classes.mainContainer}>
       <Image src={image} className={classes.image} />
@@ -228,16 +242,22 @@ export default function ListItem({ data, currentPlayingPosition }) {
             onClick={handleDownload}
             size="small"
           >
-            <CheckCircleIcon className="check-cache-icon"
-              style={isDownloaded ? { color: "rgb(16, 180, 102)" } : { color: "gray" }}
+            <CheckCircleIcon
+              className="check-cache-icon"
+              style={
+                isDownloaded
+                  ? { color: "rgb(16, 180, 102)" }
+                  : { color: "gray" }
+              }
             />
           </IconButton>
           <IconButton size="small">
             <a
               className="download-icon-container"
-              href={"data:audio/mp3," + link}
+              href={`data:${fileType},` + link}
               target="_blank"
               download={name}
+              
             >
               <DownloadIcon />
             </a>
@@ -264,7 +284,7 @@ export default function ListItem({ data, currentPlayingPosition }) {
                 data-tip="Copy the link"
                 className="btn-link"
                 onClick={(e) => {
-                  notify()
+                  notify();
                   e.target.style.color = "rgb(29,161,245)";
                   setTimeout(() => {
                     e.target.style.color = "#777";
@@ -342,8 +362,11 @@ export default function ListItem({ data, currentPlayingPosition }) {
                 data-tip="Share on Email"
                 className="btn-email"
                 href={
-                  "mailto:?subject=Assalamo alaykum. What do you think of this audio?&body="+link +"%0D%0A %0D%0A"+
-                  "More enlightening signs at "+"https://Listen.NurulQuran.com " 
+                  "mailto:?subject=Assalamo alaykum. What do you think of this audio?&body=" +
+                  link +
+                  "%0D%0A %0D%0A" +
+                  "More enlightening signs at " +
+                  "https://Listen.NurulQuran.com "
                 }
                 title="Share by Email"
               >
@@ -355,7 +378,7 @@ export default function ListItem({ data, currentPlayingPosition }) {
           </div>
         </Box>
       </Box>
-<ToastContainer className="notification-container-copied"/>
+      <ToastContainer className="notification-container-copied" />
     </Paper>
   );
 }
