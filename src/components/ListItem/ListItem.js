@@ -154,7 +154,7 @@ export default function ListItem({ data, currentPlayingPosition }) {
   const { favorite } = useSelector((state) => state.favorite);
   const [present, setPresent] = useState(false);
   const [display, setDisplay] = useState(true);
-  const [fileType, setFileType] = useState("audio/mp3");
+  // const [fileType, setFileType] = useState("audio/mp3");
   const notify = () =>
     toast.success("Link has been copied", {
       position: "bottom-left",
@@ -172,15 +172,45 @@ export default function ListItem({ data, currentPlayingPosition }) {
       setPresent(false);
     }
   }, [id, favorite]);
-  useEffect(() => {
-    if (link.slice(-3) === "mp4") {
-      setFileType("video/mp4");
-    } else {
-      setFileType("audio/mp3");
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (link.slice(-3) === "mp4") {
+  //     setFileType("video/mp4");
+  //   } else {
+  //     setFileType("audio/mp3");
+  //   }
+  // }, []);
 
-// ##########################
+// download link  ##########################
+
+// Current blob size limit is around 500MB for browsers
+function forceDownload(blob, filename) {
+ 
+  var a = document.createElement('a');
+  a.download = filename;
+  a.href = blob;
+  // For Firefox https://stackoverflow.com/a/32226068
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+}
+
+function downloadResource(url, filename) {
+  if (!filename) filename = url.split('\\').pop().split('/').pop();
+  fetch(url, {
+      headers: new Headers({
+        'Origin': window.location.origin
+      }),
+      mode: 'cors'
+    })
+    .then(response => response.blob())
+    .then(blob => {
+      let blobUrl = window.URL.createObjectURL(blob);
+      forceDownload(blobUrl, filename);
+    })
+    .catch(e => console.error(e));
+}
+
+
 
 
   function handleFavorite() {
@@ -254,10 +284,10 @@ export default function ListItem({ data, currentPlayingPosition }) {
           <IconButton size="small">
             <a
               className="download-icon-container"
-              href={`data:${fileType},` + link}
-              target="_blank"
-              download={name}
-              
+              // href={`data:${fileType},` + link}
+              // target="_blank"
+              // download={name}
+              onClick={()=>downloadResource(link,name)}
             >
               <DownloadIcon />
             </a>
