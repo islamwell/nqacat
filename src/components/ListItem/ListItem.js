@@ -22,6 +22,7 @@ import parse from "html-react-parser";
 import ReactTooltip from "react-tooltip";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import CloseIcon from "@material-ui/icons/Close";
 
 import { Image } from "../../components";
 const useStyles = makeStyles((theme) => ({
@@ -155,10 +156,10 @@ export default function ListItem({ data, currentPlayingPosition }) {
   const [present, setPresent] = useState(false);
   const [display, setDisplay] = useState(true);
   // const [fileType, setFileType] = useState("audio/mp3");
-  const notify = () =>
-    toast.success("Link has been copied", {
+  const notify = (message) =>
+    toast.success(message, {
       position: "bottom-left",
-      autoClose: 2000,
+      autoClose: true,
       hideProgressBar: true,
       closeOnClick: true,
       pauseOnHover: true,
@@ -172,6 +173,7 @@ export default function ListItem({ data, currentPlayingPosition }) {
       setPresent(false);
     }
   }, [id, favorite]);
+
   // useEffect(() => {
   //   if (link.slice(-3) === "mp4") {
   //     setFileType("video/mp4");
@@ -180,38 +182,56 @@ export default function ListItem({ data, currentPlayingPosition }) {
   //   }
   // }, []);
 
-// download link  ##########################
+  // download notification toast  ##########################
+  let toastId = React.useRef(id);
+  const notifys = () =>
+    (toastId.current = toast.loading("Downloading please wait...", {
+      position: toast.POSITION.BOTTOM_LEFT,
+      closeButton: CloseButton,
+    }));
+  const dismiss = () => toast.dismiss(toastId.current);
+  const CloseButton = () => (
+    <i className="material-icons" onClick={dismiss}>
+      <CloseIcon />
+    </i>
+  );
 
-// Current blob size limit is around 500MB for browsers
-function forceDownload(blob, filename) {
- 
-  var a = document.createElement('a');
-  a.download = filename;
-  a.href = blob;
-  // For Firefox https://stackoverflow.com/a/32226068
-  document.body.appendChild(a);
-  a.click();
-  a.remove();
-}
+  // Current blob size limit is around 500MB for browsers
+  function forceDownload(blob, filename) {
+    var a = document.createElement("a");
+    a.download = filename;
+    a.href = blob;
+    // For Firefox https://stackoverflow.com/a/32226068
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
 
-function downloadResource(url, filename) {
-  if (!filename) filename = url.split('\\').pop().split('/').pop();
-  fetch(url, {
+    toast.update(toastId.current, {
+      render: "Downloaded",
+      type: "success",
+      isLoading: false,
+    });
+    dismiss();
+  }
+
+  
+  function downloadResource(url, filename) {
+    notifys();
+    if (!filename) filename = url.split("\\").pop().split("/").pop();
+    filename=filename.replace(".","  ")
+    fetch(url, {
       headers: new Headers({
-        'Origin': window.location.origin
+        Origin: window.location.origin,
       }),
-      mode: 'cors'
+      mode: "cors",
     })
-    .then(response => response.blob())
-    .then(blob => {
-      let blobUrl = window.URL.createObjectURL(blob);
-      forceDownload(blobUrl, filename);
-    })
-    .catch(e => console.error(e));
-}
-
-
-
+      .then((response) => response.blob())
+      .then((blob) => {
+        let blobUrl = window.URL.createObjectURL(blob);
+        forceDownload(blobUrl, filename);
+      })
+      .catch((e) => console.error(e));
+  }
 
   function handleFavorite() {
     dispatch(
@@ -284,10 +304,14 @@ function downloadResource(url, filename) {
           <IconButton size="small">
             <a
               className="download-icon-container"
+              data-tip="downloading"
               // href={`data:${fileType},` + link}
               // target="_blank"
               // download={name}
-              onClick={()=>downloadResource(link,name)}
+              onClick={() => {
+                // notify("downloading")
+                downloadResource(link, name);
+              }}
             >
               <DownloadIcon />
             </a>
@@ -314,7 +338,7 @@ function downloadResource(url, filename) {
                 data-tip="Copy the link"
                 className="btn-link"
                 onClick={(e) => {
-                  notify();
+                  notify("Link has been copied");
                   e.target.style.color = "rgb(29,161,245)";
                   setTimeout(() => {
                     e.target.style.color = "#777";

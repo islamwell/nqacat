@@ -245,7 +245,9 @@ export default function PrimarySearchAppBar() {
                   <Switch color="primary" onClick={handleOffline} checked={offlineMode} />
                 </Box>
               </MenuItem> */}
-              <MenuItem onClick={()=>history.push("/favorites")} button={true}> Favorites </MenuItem>
+              <MenuItem onClick={()=>{history.push("/favorites")
+              handleClose()
+              }} button={true}> Favorites </MenuItem>
               <MenuItem button={false}>v{version}</MenuItem>
             </Menu>
           </div>
