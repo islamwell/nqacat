@@ -1,2 +1,2 @@
-export const version = "2.3.3122";
-export const domain = "https://add.nurulquran.com"
+export const version = "2.5.3122";
+export const domain = "http://add.nurulquran.com"
