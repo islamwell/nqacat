@@ -21,7 +21,7 @@ clientsClaim();
 
 setCacheNameDetails({
     prefix: "nurulquran",
-    suffix: "2.998.29",
+    suffix: "2.998.30",
     precache: "nurulquran-precache",
     runtime: "nurulquran-runtime",
 });
