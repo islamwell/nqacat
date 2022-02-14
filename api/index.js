@@ -1,5 +1,5 @@
 const axios = require("axios")
-const domain = "http://add.nurulquran.com"
+const domain = "http://nqapp.nurulquran.com"
 const fs = require("fs")
 
 const getAudioListFromAllPages = async (page = 1) => {
