@@ -2,7 +2,7 @@ const core = require("@actions/core");
 const axios = require("axios");
 
 const getCategories = async (page = 1) => {
-    const query = `https://add.nurulquran.com/index.php/api/category?page=${page}`;
+    const query = `https://nqapp.nurulquran.com/index.php/api/category?page=${page}`;
     const response = await axios.get(query);
     const data = response.data;
 
