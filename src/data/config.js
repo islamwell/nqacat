@@ -1,2 +1,2 @@
-export const version = "2.998.33";
+export const version = "2.998.34";
 export const domain = "https://nqapp.nurulquran.com"
