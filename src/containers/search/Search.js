@@ -128,7 +128,7 @@ export default function Search() {
               <Box fontWeight="fontWeightBold" mr={2}>
                 Result for
               </Box>
-              <Box>{searchText}</Box>
+              <Box>{decodeURIComponent(searchText)}</Box>
             </Box>
           </Grid>
           <Grid item xs={12} md={8}>
