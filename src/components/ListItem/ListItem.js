@@ -247,7 +247,7 @@ export default function ListItem({ data, currentPlayingPosition }) {
   }
 
   return (
-    <Paper variant="outlined" className={classes.mainContainer}>
+    <Paper variant="outlined" className={classes.mainContainer} style={{ backgruondColor: 'red' }}>
       <Image src={image} className={classes.image} />
       <Box
         pl={1}
@@ -356,7 +356,7 @@ export default function ListItem({ data, currentPlayingPosition }) {
                 class="btn-twitter"
                 href={"https://twitter.com/share?url=" + link}
                 onClick={(e) => {
-                  javascript: window.open(
+                  window.open(
                     "https://twitter.com/share?url=" +
                       link +
                       "&text=Assalamo alaykum. What do you think of this audio?",
@@ -376,7 +376,7 @@ export default function ListItem({ data, currentPlayingPosition }) {
                 class="btn-facebook"
                 href={"https://www.facebook.com/sharer/sharer.php?u=" + link}
                 onClick={(e) => {
-                  javascript: window.open(
+                  window.open(
                     "https://www.facebook.com/sharer/sharer.php?u=" + link,
                     "",
                     "menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600"
@@ -397,7 +397,7 @@ export default function ListItem({ data, currentPlayingPosition }) {
                   link
                 }
                 onClick={(e) => {
-                  javascript: window.open(
+                  window.open(
                     "https://api.whatsapp.com/send?text=Assalamo alaykum. What do you think of this audio? " +
                       link,
                     "",

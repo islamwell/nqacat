@@ -9,7 +9,7 @@ import "swiper/components/pagination/pagination.min.css";
 import Pagination from "@material-ui/lab/Pagination";
 import { useData } from "../../hooks/useData";
 import { useParams } from "react-router-dom";
-import { getCategoryById } from "../../db/services";
+import { getCategoryByExactName, getCategoryById, getCategoryByName } from "../../db/services";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import {IconButton} from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
@@ -55,10 +55,10 @@ export default function Home() {
     const classes = useStyles();
     const params = useParams();
     const theme = useTheme();
-
-    const categoryId = params.id;
+    const categoryName = params.name;
 
     const [categoryDetails, setCategoryDetails] = useState(null);
+    const categoryId = categoryDetails?.id;
 
     const { offlineMode } = useSelector((state) => state.download);
     const { playing } = useSelector((state) => state.player);
@@ -68,6 +68,7 @@ export default function Home() {
     const { loading, totalPages, currentPage, audioList, changePage } = useData({
         offlineMode,
         categoryId,
+        shouldSearch: !!categoryDetails,
     });
 
     const handleChangePage = (_, page) => {
@@ -75,9 +76,9 @@ export default function Home() {
     };
 
     useEffect(() => {
-        const categoryDetails = getCategoryById(categoryId);
+        const categoryDetails = getCategoryByExactName(categoryName);
         setCategoryDetails(categoryDetails);
-    }, [categoryId]);
+    }, [categoryName]);
 
     const showPagination = !loading && audioList.length > 0 && totalPages > 1;
 
@@ -108,7 +109,6 @@ export default function Home() {
         )
     }
     useEffect(() => {
-
         if (favorite.find((item) => item.id === categoryDetails?.id)) {
             setPresent(true);
           } else {

@@ -57,7 +57,9 @@ export const getAudioByCategory = async (categoryId, page) => {
     // https://github.com/dfahlander/Dexie.js/issues/838
     try {
         const allItems = await db.table("audioList").limit(HARD_LIMIT).toArray();
-        let filtered = allItems.filter((item) => item.category_id === categoryId);
+        let filtered = allItems.filter((item) => {
+            return item.category_id === categoryId;
+        });
         if (allItems.length === HARD_LIMIT) {
             // We didn't get all data in first try.
             // Need to continue filtering one by one:
@@ -137,6 +139,18 @@ const recursivSearchByName = (categories, searchText) => {
     return filtered;
 };
 
+export const recursiveSearchByExactName = (categories, searchText) => {
+    let filtered = categories.filter(item => item.name.toLowerCase() === searchText.replace(/"/g, "").toLowerCase())
+
+    categories.forEach((category) => {
+        if (category.subCategories) {
+            filtered = filtered.concat(recursiveSearchByExactName(category.subCategories, searchText));
+        }
+    });
+
+    return filtered;
+};
+
 export const getCategoryById = (id) => {
     return recursivSearchById(categories, id);
 };
@@ -150,4 +164,8 @@ export const getCategoryByName = (searchText, page) => {
     const allpage = Math.round(filtered.length / pageSize);
 
     return { data, allpage };
+};
+
+export const getCategoryByExactName = (searchText) => {
+    return recursiveSearchByExactName(categories, searchText)[0];
 };
