@@ -101,7 +101,7 @@ export default function Player() {
     };
 
     const onCategoryClick = () => {
-        history.push(`/category/${categoryId}`);
+        history.push(`/category/${encodeURIComponent(name)}`);
     };
 
     const togglePlayer = (status) => {

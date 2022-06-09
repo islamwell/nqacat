@@ -77,8 +77,8 @@ export default function Search() {
 
   const matches = useMediaQuery(theme.breakpoints.down("xs"));
 
-  const handleCategoryClick = (id) => {
-    history.push(`/category/${id}`);
+  const handleCategoryClick = (name) => {
+    history.push(`/category/${encodeURIComponent(name)}`);
   };
 
   const {
@@ -188,7 +188,7 @@ export default function Search() {
                     </Box>
                   )}
                   {categoryList.map((item) => (
-                    <Grid onClick={() => handleCategoryClick(item.id)} item className={classes.categoryItem}>
+                    <Grid onClick={() => handleCategoryClick(item.name)} item className={classes.categoryItem}>
                       <Image src={item.image} className={classes.image} />
                       <Box
                         textAlign="center"

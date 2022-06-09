@@ -29,9 +29,6 @@ function App() {
       <Router>
         <Layout>
           <Switch>
-            {/* <Route exact path="/category/:id"> */}
-            {/* <Catergory /> */}
-            {/* </Route> */}
             <Route exact path="/category/:name">
               <Catergory />
             </Route>

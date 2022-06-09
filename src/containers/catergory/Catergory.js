@@ -1,18 +1,17 @@
-import React, { useEffect, useState } from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import Paper from "@material-ui/core/Paper";
+import { Box, Container, IconButton, useMediaQuery, useTheme } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
-import { Box, Container, useMediaQuery, useTheme } from "@material-ui/core";
-import { Image, ListItem } from "../../components";
-import "swiper/swiper.min.css";
-import "swiper/components/pagination/pagination.min.css";
-import Pagination from "@material-ui/lab/Pagination";
-import { useData } from "../../hooks/useData";
-import { useParams } from "react-router-dom";
-import { getCategoryByExactName, getCategoryById, getCategoryByName } from "../../db/services";
+import Paper from "@material-ui/core/Paper";
+import { makeStyles } from "@material-ui/core/styles";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
-import {IconButton} from "@material-ui/core";
+import Pagination from "@material-ui/lab/Pagination";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
+import "swiper/components/pagination/pagination.min.css";
+import "swiper/swiper.min.css";
+import { Image, ListItem } from "../../components";
+import { getCategoryByExactName } from "../../db/services";
+import { useData } from "../../hooks/useData";
 import { changeFav } from "../../store/slices/favoriteSlice";
 
 const useStyles = makeStyles((theme) => ({
@@ -55,7 +54,9 @@ export default function Home() {
     const classes = useStyles();
     const params = useParams();
     const theme = useTheme();
-    const categoryName = params.name;
+    const categoryName = decodeURIComponent(params.name);
+
+    console.log('Home', { categoryName });
 
     const [categoryDetails, setCategoryDetails] = useState(null);
     const categoryId = categoryDetails?.id;

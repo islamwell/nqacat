@@ -20,9 +20,9 @@ export default function MobileDropdownMenu({ open, onSelect }) {
     const classes = useStyles();
     const history = useHistory();
 
-    const handleSelectCategory = (id) => {
+    const handleSelectCategory = (name) => {
         onSelect();
-        history.push(`/category/${id}`);
+        history.push(`/category/${encodeURIComponent(name)}`);
     };
 
     const handleHomeButtom = () => {
@@ -39,8 +39,9 @@ export default function MobileDropdownMenu({ open, onSelect }) {
                     </SubMenu>
                 );
             }
+
             return (
-                <ListItem key={key} button onClick={() => handleSelectCategory(category.id)}>
+                <ListItem key={key} button onClick={() => handleSelectCategory(category.name)}>
                     <ListItemText primary={category.name} />
                 </ListItem>
             );
