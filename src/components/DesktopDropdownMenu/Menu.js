@@ -75,8 +75,8 @@ export default function Menu({ category }) {
         prevOpen.current = open;
     }, [open]);
 
-    const handleSelectCategory = (id) => {
-        history.push(`/category/${id}`);
+    const handleSelectCategory = (name) => {
+        history.push(`/category/${encodeURIComponent(name)}`);
         setOpen(false);
     };
 
@@ -90,7 +90,7 @@ export default function Menu({ category }) {
                 );
             }
             return (
-                <MenuItem onClick={() => handleSelectCategory(category.id)} key={key} className={classes.title}>
+                <MenuItem onClick={() => handleSelectCategory(category.name)} key={key} className={classes.title}>
                     {category.name}
                 </MenuItem>
             );

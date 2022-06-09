@@ -8,7 +8,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import { changeCache } from "../../store/slices/downloadSlice";
-
 import Pagination from '@material-ui/lab/Pagination';
 
 const useStyles = makeStyles((theme) => ({
@@ -99,7 +98,7 @@ const handleChange = (event, value) => {
           >
             
      <p onClick={()=>{
-       if(item.link==="category-link"){history.push("/category/"+item.id)}
+              if (item.link === "category-link") { history.push("/category/" + encodeURIComponent(item.name)) }
      }}>       {item.name}</p>
          
           </Box>

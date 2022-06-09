@@ -122,7 +122,7 @@ function Favorite() {
               <p
                 onClick={() => {
                   if (item.link === "category-link") {
-                    history.push("/category/" + item.id);
+                    history.push("/category/" + encodeURIComponent(item.name));
                   }
                 }}
               >
