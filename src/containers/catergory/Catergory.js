@@ -54,9 +54,12 @@ export default function Home() {
     const classes = useStyles();
     const params = useParams();
     const theme = useTheme();
-    const categoryName = decodeURIComponent(params.name);
+    const categoryName = decodeURIComponent(params.category);
+    const subCategoryOneName = params.subCategoryOne;
+    const subCategoryTwoName = params.subCategoryTwo;
+    const subCategoryThreeName = params.subCategoryThree;
 
-    console.log('Home', { categoryName });
+    console.log('Home', { categoryName, subCategoryOneName, subCategoryTwoName, subCategoryThreeName });
 
     const [categoryDetails, setCategoryDetails] = useState(null);
     const categoryId = categoryDetails?.id;

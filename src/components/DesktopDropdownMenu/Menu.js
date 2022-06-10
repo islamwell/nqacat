@@ -1,14 +1,16 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useCallback } from "react";
 import ClickAwayListener from "@material-ui/core/ClickAwayListener";
 import Grow from "@material-ui/core/Grow";
-import Paper from "@material-ui/core/Paper";
-import Popper from "@material-ui/core/Popper";
 import MenuItem from "@material-ui/core/MenuItem";
 import MenuList from "@material-ui/core/MenuList";
+import Paper from "@material-ui/core/Paper";
+import Popper from "@material-ui/core/Popper";
 import { makeStyles } from "@material-ui/core/styles";
-import SubMenu from "./SubMenu";
+import React, { useCallback } from "react";
 import { useHistory } from "react-router-dom";
+import { getSubCategoryIds, getSubCategoryNamesByIds } from '../../db/services';
+import { navigateToCategory } from "../../helpers/navigateToCategory";
+import SubMenu from "./SubMenu";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -75,8 +77,8 @@ export default function Menu({ category }) {
         prevOpen.current = open;
     }, [open]);
 
-    const handleSelectCategory = (name) => {
-        history.push(`/category/${encodeURIComponent(name)}`);
+    const handleSelectCategory = ({ id }) => {
+        navigateToCategory(id, history);
         setOpen(false);
     };
 
@@ -90,7 +92,7 @@ export default function Menu({ category }) {
                 );
             }
             return (
-                <MenuItem onClick={() => handleSelectCategory(category.name)} key={key} className={classes.title}>
+                <MenuItem onClick={() => handleSelectCategory(category)} key={key} className={classes.title}>
                     {category.name}
                 </MenuItem>
             );

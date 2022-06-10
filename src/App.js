@@ -29,7 +29,7 @@ function App() {
       <Router>
         <Layout>
           <Switch>
-            <Route exact path="/category/:name">
+            <Route path="/category/:category/:subCategoryOne?/:subCategoryTwo?/:subCategoryThree?">
               <Catergory />
             </Route>
             <Route exact path="/item">

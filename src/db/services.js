@@ -169,3 +169,27 @@ export const getCategoryByName = (searchText, page) => {
 export const getCategoryByExactName = (searchText) => {
     return recursiveSearchByExactName(categories, searchText)[0];
 };
+
+export const getSubCategoryIds = (categoryId, subCategoryIds) => {
+    let category = getCategoryById(categoryId);
+    subCategoryIds.push(category.id);
+
+    if (category.parentId !== '0') {
+        category = getSubCategoryIds(category.parentId, subCategoryIds);
+    }
+
+    return { category, subCategoryIds };
+};
+
+const getCategoriesByIds = (subCategoryIds) => {
+    const categories = [];
+    subCategoryIds.forEach((id) => {
+        categories.push(getCategoryById(id));
+    });
+    return categories;
+};
+
+export const getSubCategoryNamesByIds = (subCategoryIds) => {
+    const categories = getCategoriesByIds(subCategoryIds);
+    return categories.map(category => category.name).reverse();
+}

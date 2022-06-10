@@ -11,6 +11,7 @@ import { useData } from "../../hooks/useData";
 import { useLocation, useHistory } from "react-router-dom";
 import { useMediaQuery } from "@material-ui/core";
 import parse from "html-react-parser"
+import { navigateToCategory } from "../../helpers/navigateToCategory";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -77,8 +78,8 @@ export default function Search() {
 
   const matches = useMediaQuery(theme.breakpoints.down("xs"));
 
-  const handleCategoryClick = (name) => {
-    history.push(`/category/${encodeURIComponent(name)}`);
+  const handleCategoryClick = (id) => {
+    navigateToCategory(id, history);
   };
 
   const {
@@ -188,7 +189,7 @@ export default function Search() {
                     </Box>
                   )}
                   {categoryList.map((item) => (
-                    <Grid onClick={() => handleCategoryClick(item.name)} item className={classes.categoryItem}>
+                    <Grid onClick={() => handleCategoryClick(item.id)} item className={classes.categoryItem}>
                       <Image src={item.image} className={classes.image} />
                       <Box
                         textAlign="center"
