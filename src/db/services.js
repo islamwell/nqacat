@@ -174,16 +174,12 @@ export const getCategoryByNameAndSubCategoryNames = (name, subCategoryNames) => 
     const [subCategoryOneName, subCategoryTwoName, subCategoryThreeName] = subCategoryNames;
     const category = getCategoryByExactName(name);
 
-    console.log('getCategoryByNameAndSubCategoryNames', { name, category })
-
     if (!category?.subCategories?.length) {
         return category;
     }
 
     if (subCategoryOneName) {
         const subCategoryOne = category?.subCategories.find((item) => item.name.toLowerCase() === subCategoryOneName.toLowerCase());
-
-        console.log('subCategoryOneName', { subCategories: category?.subCategories, subCategoryOneName, subCategoryOne });
 
         if (!subCategoryOne?.subCategories?.length) {
             return subCategoryOne;

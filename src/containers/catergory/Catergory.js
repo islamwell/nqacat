@@ -54,15 +54,13 @@ export default function Home() {
     const classes = useStyles();
     const params = useParams();
     const theme = useTheme();
+    const [categoryDetails, setCategoryDetails] = useState(null);
+    const categoryId = categoryDetails?.id;
+
     const categoryName = decodeURIComponent(params.category).replace(/-/g, ' ');
     const subCategoryOneName = params.subCategoryOne?.replace(/-/g, ' ');
     const subCategoryTwoName = params.subCategoryTwo?.replace(/-/g, ' ');
     const subCategoryThreeName = params.subCategoryThree?.replace(/-/g, ' ');
-
-    console.log('Home', { categoryName, subCategoryOneName, subCategoryTwoName, subCategoryThreeName });
-
-    const [categoryDetails, setCategoryDetails] = useState(null);
-    const categoryId = categoryDetails?.id;
 
     const { offlineMode } = useSelector((state) => state.download);
     const { playing } = useSelector((state) => state.player);
@@ -81,7 +79,6 @@ export default function Home() {
 
     useEffect(() => {
         const categoryDetails = getCategoryByNameAndSubCategoryNames(categoryName, [subCategoryOneName, subCategoryTwoName, subCategoryThreeName]);
-        console.log('categoryDetails', categoryDetails);
         setCategoryDetails(categoryDetails);
     }, [categoryName]);
 
