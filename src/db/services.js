@@ -170,6 +170,43 @@ export const getCategoryByExactName = (searchText) => {
     return recursiveSearchByExactName(categories, searchText)[0];
 };
 
+export const getCategoryByNameAndSubCategoryNames = (name, subCategoryNames) => {
+    const [subCategoryOneName, subCategoryTwoName, subCategoryThreeName] = subCategoryNames;
+    const category = getCategoryByExactName(name);
+
+    console.log('getCategoryByNameAndSubCategoryNames', { name, category })
+
+    if (!category?.subCategories?.length) {
+        return category;
+    }
+
+    if (subCategoryOneName) {
+        const subCategoryOne = category?.subCategories.find((item) => item.name.toLowerCase() === subCategoryOneName.toLowerCase());
+
+        console.log('subCategoryOneName', { subCategories: category?.subCategories, subCategoryOneName, subCategoryOne });
+
+        if (!subCategoryOne?.subCategories?.length) {
+            return subCategoryOne;
+        }
+
+        if (subCategoryTwoName) {
+            const subCategoryTwo = subCategoryOne?.subCategories.find((item) => item.name.toLowerCase() === subCategoryTwoName.toLowerCase());
+
+            if (!subCategoryTwo?.subCategories?.length) {
+                return subCategoryTwo
+            }
+
+            if (subCategoryThreeName) {
+                const subCategoryThree = subCategoryTwo?.subCategories.find((item) => item.name.toLowerCase() === subCategoryThreeName.toLowerCase());
+
+                if (!subCategoryThree?.subCategories?.length) {
+                    return subCategoryThree;
+                }
+            }
+        }
+    }
+};
+
 export const getSubCategoryIds = (categoryId, subCategoryIds) => {
     let category = getCategoryById(categoryId);
     subCategoryIds.push(category.id);
@@ -192,4 +229,14 @@ const getCategoriesByIds = (subCategoryIds) => {
 export const getSubCategoryNamesByIds = (subCategoryIds) => {
     const categories = getCategoriesByIds(subCategoryIds);
     return categories.map(category => category.name).reverse();
+}
+
+export const getRootCategory = (categoryId) => {
+    let category = getCategoryById(categoryId);
+
+    if (category.parentId !== '0') {
+        category = getCategoryById(category.parentId);
+    }
+
+    return category;
 }

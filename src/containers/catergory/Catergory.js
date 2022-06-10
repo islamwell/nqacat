@@ -10,7 +10,7 @@ import { useParams } from "react-router-dom";
 import "swiper/components/pagination/pagination.min.css";
 import "swiper/swiper.min.css";
 import { Image, ListItem } from "../../components";
-import { getCategoryByExactName } from "../../db/services";
+import { getCategoryByExactName, getCategoryByNameAndSubCategoryNames } from "../../db/services";
 import { useData } from "../../hooks/useData";
 import { changeFav } from "../../store/slices/favoriteSlice";
 
@@ -54,10 +54,10 @@ export default function Home() {
     const classes = useStyles();
     const params = useParams();
     const theme = useTheme();
-    const categoryName = decodeURIComponent(params.category);
-    const subCategoryOneName = params.subCategoryOne;
-    const subCategoryTwoName = params.subCategoryTwo;
-    const subCategoryThreeName = params.subCategoryThree;
+    const categoryName = decodeURIComponent(params.category).replace(/-/g, ' ');
+    const subCategoryOneName = params.subCategoryOne?.replace(/-/g, ' ');
+    const subCategoryTwoName = params.subCategoryTwo?.replace(/-/g, ' ');
+    const subCategoryThreeName = params.subCategoryThree?.replace(/-/g, ' ');
 
     console.log('Home', { categoryName, subCategoryOneName, subCategoryTwoName, subCategoryThreeName });
 
@@ -80,7 +80,8 @@ export default function Home() {
     };
 
     useEffect(() => {
-        const categoryDetails = getCategoryByExactName(categoryName);
+        const categoryDetails = getCategoryByNameAndSubCategoryNames(categoryName, [subCategoryOneName, subCategoryTwoName, subCategoryThreeName]);
+        console.log('categoryDetails', categoryDetails);
         setCategoryDetails(categoryDetails);
     }, [categoryName]);
 
