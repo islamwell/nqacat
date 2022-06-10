@@ -102,7 +102,7 @@ export default function Player() {
     };
 
     const onCategoryClick = () => {
-        navigateToCategory(id, history);
+        navigateToCategory(categoryId, history);
     };
 
     const togglePlayer = (status) => {
