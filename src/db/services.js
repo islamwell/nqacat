@@ -217,7 +217,7 @@ export const getCategoryByNameAndSubCategoryNames = (name, subCategoryNames) => 
 };
 
 const normalizeCategoryName = (categoryName) => {
-    return categoryName.replace(/-/g, ' ');
+    return categoryName?.replace(/-/g, ' ');
 };
 
 export const getSubCategoryIds = (categoryId, subCategoryIds) => {
