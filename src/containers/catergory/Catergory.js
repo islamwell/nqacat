@@ -4,13 +4,13 @@ import Paper from "@material-ui/core/Paper";
 import { makeStyles } from "@material-ui/core/styles";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import Pagination from "@material-ui/lab/Pagination";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import "swiper/components/pagination/pagination.min.css";
 import "swiper/swiper.min.css";
 import { Image, ListItem } from "../../components";
-import { getCategoryByExactName, getCategoryByNameAndSubCategoryNames } from "../../db/services";
+import { getCategoryByNameAndSubCategoryNames } from "../../db/services";
 import { useData } from "../../hooks/useData";
 import { changeFav } from "../../store/slices/favoriteSlice";
 
@@ -80,7 +80,7 @@ export default function Home() {
     useEffect(() => {
         const categoryDetails = getCategoryByNameAndSubCategoryNames(categoryName, [subCategoryOneName, subCategoryTwoName, subCategoryThreeName]);
         setCategoryDetails(categoryDetails);
-    }, [categoryName]);
+    }, [categoryName, subCategoryOneName, subCategoryTwoName, subCategoryThreeName]);
 
     const showPagination = !loading && audioList.length > 0 && totalPages > 1;
 
