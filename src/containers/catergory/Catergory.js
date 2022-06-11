@@ -6,7 +6,7 @@ import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import Pagination from "@material-ui/lab/Pagination";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import "swiper/components/pagination/pagination.min.css";
 import "swiper/swiper.min.css";
 import { Image, ListItem } from "../../components";
@@ -54,6 +54,7 @@ export default function Home() {
     const classes = useStyles();
     const params = useParams();
     const theme = useTheme();
+    const history = useHistory();
     const [categoryDetails, setCategoryDetails] = useState(null);
     const categoryId = categoryDetails?.id;
 
@@ -61,6 +62,8 @@ export default function Home() {
     const subCategoryOneName = params.subCategoryOne?.replace(/-/g, ' ');
     const subCategoryTwoName = params.subCategoryTwo?.replace(/-/g, ' ');
     const subCategoryThreeName = params.subCategoryThree?.replace(/-/g, ' ');
+
+    console.log('%c Category render', 'color: yellow', { categoryId, params, history })
 
     const { offlineMode } = useSelector((state) => state.download);
     const { playing } = useSelector((state) => state.player);
@@ -80,7 +83,7 @@ export default function Home() {
     useEffect(() => {
         const categoryDetails = getCategoryByNameAndSubCategoryNames(categoryName, [subCategoryOneName, subCategoryTwoName, subCategoryThreeName]);
         setCategoryDetails(categoryDetails);
-    }, [categoryName]);
+    }, [categoryName, subCategoryOneName, subCategoryTwoName, subCategoryThreeName]);
 
     const showPagination = !loading && audioList.length > 0 && totalPages > 1;
 
