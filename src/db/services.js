@@ -183,7 +183,6 @@ export const getCategoryByNameAndSubCategoryNames = (name, subCategoryNames) => 
     });
 
     if (!subCategoryOne?.subCategories?.length) {
-        console.log('HERE 3');
         if (subCategoryOne) {
             return subCategoryOne;
         }
