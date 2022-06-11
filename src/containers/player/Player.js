@@ -13,6 +13,7 @@ import "react-h5-audio-player/lib/styles.css";
 import "./player.css";
 import { useHistory } from "react-router-dom";
 import * as offlineAPI from "../../db/services";
+import { navigateToCategory } from "../../helpers/navigateToCategory";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -101,7 +102,7 @@ export default function Player() {
     };
 
     const onCategoryClick = () => {
-        history.push(`/category/${encodeURIComponent(name)}`);
+        navigateToCategory(categoryId, history);
     };
 
     const togglePlayer = (status) => {

@@ -26,7 +26,7 @@ export const getAudioByName = async (searchText, page) => {
                 .table("audioList")
                 .offset(HARD_LIMIT)
                 .toArray();
-            
+
             const filteredRest = searchText.startsWith('"')
                 ? rest.filter(item => item.name.toLowerCase().includes(searchText.replace(/"/g, "").toLowerCase()))
                 : fuzzysort.go(searchText, rest, { key: 'name', allowTypo: true }).map(result => ({
@@ -169,3 +169,87 @@ export const getCategoryByName = (searchText, page) => {
 export const getCategoryByExactName = (searchText) => {
     return recursiveSearchByExactName(categories, searchText)[0];
 };
+
+export const getCategoryByNameAndSubCategoryNames = (name, subCategoryNames) => {
+    const [subCategoryOneName, subCategoryTwoName, subCategoryThreeName] = subCategoryNames;
+    const category = getCategoryByExactName(name);
+
+    if (!category?.subCategories?.length) {
+        return category;
+    }
+
+    const subCategoryOne = category?.subCategories.find((item) => {
+        return normalizeCategoryName(item.name?.toLowerCase()) === normalizeCategoryName(subCategoryOneName?.toLowerCase());
+    });
+
+    if (!subCategoryOne?.subCategories?.length) {
+        console.log('HERE 3');
+        if (subCategoryOne) {
+            return subCategoryOne;
+        }
+
+        return category;
+    }
+
+    const subCategoryTwo = subCategoryOne?.subCategories.find((item) => {
+        return normalizeCategoryName(item.name?.toLowerCase()) === normalizeCategoryName(subCategoryTwoName?.toLowerCase());
+    });
+
+    if (!subCategoryTwo?.subCategories?.length) {
+        if (subCategoryTwo) {
+            return subCategoryTwo;
+        }
+
+        return subCategoryOne;
+    }
+
+    const subCategoryThree = subCategoryTwo?.subCategories.find((item) => {
+        return normalizeCategoryName(item.name?.toLowerCase()) === normalizeCategoryName(subCategoryThreeName?.toLowerCase());
+    });
+
+    if (!subCategoryThree?.subCategories?.length) {
+        if (subCategoryThree) {
+            return subCategoryThree;
+        }
+
+        return subCategoryTwo;
+    }
+};
+
+const normalizeCategoryName = (categoryName) => {
+    return categoryName?.replace(/-/g, ' ');
+};
+
+export const getSubCategoryIds = (categoryId, subCategoryIds) => {
+    let category = getCategoryById(categoryId);
+    subCategoryIds.push(category.id);
+
+    if (category.parentId !== '0') {
+        category = getSubCategoryIds(category.parentId, subCategoryIds);
+    }
+
+    return { category, subCategoryIds };
+};
+
+const getCategoriesByIds = (subCategoryIds) => {
+    const categories = [];
+    subCategoryIds.forEach((id) => {
+        categories.push(getCategoryById(id));
+    });
+    return categories;
+};
+
+export const getSubCategoryNamesByIds = (subCategoryIds) => {
+    const categories = getCategoriesByIds(subCategoryIds);
+    return categories.map(category => category.name).reverse();
+}
+
+export const getRootCategory = (categoryId) => {
+    let category = getCategoryById(categoryId);
+
+    if (category.parentId !== '0') {
+        category = getCategoryById(category.parentId);
+    }
+
+    return category;
+}

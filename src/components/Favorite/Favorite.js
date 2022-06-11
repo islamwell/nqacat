@@ -9,6 +9,7 @@ import { changeFav } from "../../store/slices/favoriteSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
 import Pagination from "@material-ui/lab/Pagination";
+import { navigateToCategory } from "../../helpers/navigateToCategory";
 
 const useStyles = makeStyles((theme) => ({
   mainContainer: {
@@ -122,7 +123,7 @@ function Favorite() {
               <p
                 onClick={() => {
                   if (item.link === "category-link") {
-                    history.push("/category/" + encodeURIComponent(item.name));
+                    navigateToCategory(item.id, history);
                   }
                 }}
               >

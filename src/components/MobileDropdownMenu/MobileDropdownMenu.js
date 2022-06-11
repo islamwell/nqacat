@@ -8,6 +8,7 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import SubMenu from "./SubMenu";
 import { Slide } from "@material-ui/core";
+import { navigateToCategory } from "../../helpers/navigateToCategory";
 
 const useStyles = makeStyles({
     root: {
@@ -20,9 +21,9 @@ export default function MobileDropdownMenu({ open, onSelect }) {
     const classes = useStyles();
     const history = useHistory();
 
-    const handleSelectCategory = (name) => {
+    const handleSelectCategory = (id) => {
         onSelect();
-        history.push(`/category/${encodeURIComponent(name)}`);
+        navigateToCategory(id);
     };
 
     const handleHomeButtom = () => {
@@ -41,7 +42,7 @@ export default function MobileDropdownMenu({ open, onSelect }) {
             }
 
             return (
-                <ListItem key={key} button onClick={() => handleSelectCategory(category.name)}>
+                <ListItem key={key} button onClick={() => handleSelectCategory(category.id)}>
                     <ListItemText primary={category.name} />
                 </ListItem>
             );
