@@ -50,6 +50,10 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
+const normalizeCategoryName = (name) => {
+    return name?.replace(/-/g, ' ').replace('%26', '&').replace('%2B', '+');
+};
+
 export default function Home() {
     const classes = useStyles();
     const params = useParams();
@@ -57,10 +61,10 @@ export default function Home() {
     const [categoryDetails, setCategoryDetails] = useState(null);
     const categoryId = categoryDetails?.id;
 
-    const categoryName = decodeURIComponent(params.category).replace(/-/g, ' ');
-    const subCategoryOneName = params.subCategoryOne?.replace(/-/g, ' ');
-    const subCategoryTwoName = params.subCategoryTwo?.replace(/-/g, ' ');
-    const subCategoryThreeName = params.subCategoryThree?.replace(/-/g, ' ');
+    const categoryName = normalizeCategoryName(decodeURIComponent(params.category));
+    const subCategoryOneName = normalizeCategoryName(params.subCategoryOne);
+    const subCategoryTwoName = normalizeCategoryName(params.subCategoryTwo);
+    const subCategoryThreeName = normalizeCategoryName(params.subCategoryThree);
 
     const { offlineMode } = useSelector((state) => state.download);
     const { playing } = useSelector((state) => state.player);
