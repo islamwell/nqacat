@@ -23,7 +23,7 @@ export default function MobileDropdownMenu({ open, onSelect }) {
 
     const handleSelectCategory = (id) => {
         onSelect();
-        navigateToCategory(id);
+        navigateToCategory(id, history);
     };
 
     const handleHomeButtom = () => {
