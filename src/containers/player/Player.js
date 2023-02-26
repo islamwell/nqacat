@@ -4,7 +4,7 @@ import Box from "@material-ui/core/Box";
 import { makeStyles } from "@material-ui/core/styles";
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
-import AudioPlayer from "react-h5-audio-player";
+import AudioPlayer, { RHAP_UI } from "react-h5-audio-player";
 import { useDispatch, useSelector } from "react-redux";
 import { IconButton } from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
@@ -14,6 +14,7 @@ import "./player.css";
 import { useHistory } from "react-router-dom";
 import * as offlineAPI from "../../db/services";
 import { navigateToCategory } from "../../helpers/navigateToCategory";
+import { ActionList } from "../../components";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -55,6 +56,11 @@ const useStyles = makeStyles((theme) => ({
     categoryTitle: {
         color: "white",
         cursor: "pointer",
+        textDecoration: "underline",
+
+        "&:hover": {
+            backgroundColor: "#b3b302"
+        },
         padding: theme.spacing(1, 0, 1, 0),
         [theme.breakpoints.down("xs")]: {
             fontSize: 13,
@@ -164,7 +170,10 @@ export default function Player() {
                         showJumpControls={false}
                         showSkipControls
                         layout={isMobile ? "stacked" : "horizontal-reverse"}
-                        //customAdditionalControls={[]}
+                        customAdditionalControls={[
+                            RHAP_UI.LOOP,
+                            <ActionList data={{ link, name, id, categoryId, category_id: 0, image: null }} />
+                        ]}
                         className={classes.player}
                         autoPlay
                         src={link}
@@ -172,7 +181,7 @@ export default function Player() {
                         onClickPrevious={handlePrevious}
                         onPlay={() => togglePlayer(true)}
                         onPause={() => togglePlayer(false)}
-                        //crossOrigin="anonymous"
+                    //crossOrigin="anonymous"
                     />
                 </Box>
             </Box>
