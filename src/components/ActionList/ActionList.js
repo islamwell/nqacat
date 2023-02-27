@@ -84,7 +84,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function ListItem({ data, currentPlayingPosition }) {
+export default function ActionList({ data, currentPlayingPosition }) {
     const classes = useStyles();
     const dispatch = useDispatch();
     const [isDownloaded, setIsDownloaded] = useState(false);
@@ -251,13 +251,13 @@ export default function ListItem({ data, currentPlayingPosition }) {
                             downloadResource(link, name);
                         }}
                     >
-                        <DownloadIcon />
+                        <DownloadIcon htmlColor="white" />
                     </a>
                 </IconButton>
                 <IconButton onClick={handleFavorite} size="small">
                     <FavoriteBorderIcon
                         style={
-                            present ? { color: "rgb(240,100,100)" } : { color: "#777" }
+                            present ? { color: "rgb(240,100,100)" } : { color: currentPlayingPosition === "player" ? "white" : "#777" }
                         }
                     />
                 </IconButton>
@@ -265,7 +265,7 @@ export default function ListItem({ data, currentPlayingPosition }) {
                     onClick={() => (display ? setDisplay(false) : setDisplay(true))}
                     size="small"
                 >
-                    <ShareIcon />
+                    <ShareIcon style={{ color: currentPlayingPosition === "player" ? "white" : "#777" }} />
                 </IconButton>
                 <div>
                     <div

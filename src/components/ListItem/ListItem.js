@@ -129,19 +129,6 @@ export default function ListItem({ data, currentPlayingPosition }) {
       .catch((e) => { });
   }, [downloadingIds, link]);
 
-  //  favorite category related code
-  const { favorite } = useSelector((state) => state.favorite);
-  const [present, setPresent] = useState(false);
-
-  // const [fileType, setFileType] = useState("audio/mp3");
-  useEffect(() => {
-    if (favorite.find((item) => item.id === id)) {
-      setPresent(true);
-    } else {
-      setPresent(false);
-    }
-  }, [id, favorite]);
-
   // useEffect(() => {
   //   if (link.slice(-3) === "mp4") {
   //     setFileType("video/mp4");
@@ -154,11 +141,6 @@ export default function ListItem({ data, currentPlayingPosition }) {
   let toastId = React.useRef(id);
 
   const dismiss = () => toast.dismiss(toastId.current);
-  const CloseButton = () => (
-    <i className="material-icons" onClick={dismiss}>
-      <CloseIcon />
-    </i>
-  );
 
   return (
     <Paper variant="outlined" className={classes.mainContainer} style={{ backgruondColor: 'red' }}>
