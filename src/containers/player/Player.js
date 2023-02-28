@@ -129,10 +129,11 @@ export default function Player() {
     }, [id]);
 
     const matches = useMediaQuery('(max-width:768px)');
+    const sm = useMediaQuery('(max-width:362px)');
 
     if (open) {
         return (
-            <Box className={classes.root} display="flex" zIndex={2} style={matches ? { height: '145px' } : {}}>
+            <Box className={classes.root} display="flex" zIndex={2} style={sm ? { height: '160px' } : matches ? { height: '145px' } : {}}>
                 <Box className={classes.playerContainer}>
                     <Box display="flex" justifyContent="space-between" alignItems="center" px={1}>
                         <Box display="flex" justifyContent="center" alignItems="center">
