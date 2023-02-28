@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { Box, IconButton, Paper } from "@material-ui/core";
+import { Box, IconButton, Paper, useMediaQuery } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
 import { addToDowanloadingQueue } from "../../store/slices/downloadSlice";
 import { changeURL } from "../../store/slices/playerSlice";
@@ -130,7 +130,7 @@ export default function ActionList({ data, currentPlayingPosition }) {
     //  favorite category related code
     const { favorite } = useSelector((state) => state.favorite);
     const [present, setPresent] = useState(false);
-    const [display, setDisplay] = useState(true);
+    const [display, setDisplay] = useState(false);
     // const [fileType, setFileType] = useState("audio/mp3");
     const notify = (message) =>
         toast.success(message, {
@@ -222,9 +222,11 @@ export default function ActionList({ data, currentPlayingPosition }) {
         );
     }
 
+    const sm = useMediaQuery('(max-width:500px)')
+
     return (
         <>
-            <Box display="flex" alignItems="center" justifyContent="flex-start">
+            <Box display="flex" alignItems="center" justifyContent="flex-start" gridGap={6} style={{ position: 'relative', marginTop: (sm && currentPlayingPosition !== 'player') ? '-24px' : '' }}>
                 <IconButton
                     disabled={downloadingIds.includes(id)}
                     onClick={handleDownload}
@@ -251,7 +253,7 @@ export default function ActionList({ data, currentPlayingPosition }) {
                             downloadResource(link, name);
                         }}
                     >
-                        <DownloadIcon htmlColor="white" />
+                        <DownloadIcon style={{ color: currentPlayingPosition === "player" ? 'white' : '#777' }} />
                     </a>
                 </IconButton>
                 <IconButton onClick={handleFavorite} size="small">
@@ -262,15 +264,14 @@ export default function ActionList({ data, currentPlayingPosition }) {
                     />
                 </IconButton>
                 <IconButton
-                    onClick={() => (display ? setDisplay(false) : setDisplay(true))}
+                    onClick={() => setDisplay(!display)}
                     size="small"
                 >
                     <ShareIcon style={{ color: currentPlayingPosition === "player" ? "white" : "#777" }} />
                 </IconButton>
-                <div>
+                {display && (
                     <div
-                        style={display ? { width: "0" } : { width: "100%" }}
-                        className="share-btn"
+                        className={`share-btn ${currentPlayingPosition !== 'player' ? 'down' : ''}`}
                     >
                         <IconButton
                             data-tip="Copy the link"
@@ -305,6 +306,7 @@ export default function ActionList({ data, currentPlayingPosition }) {
                             }}
                             target="_blank"
                             title="Share on Twitter"
+                            style={{ color: currentPlayingPosition === 'player' ? 'white' : '#777' }}
                         >
                             <ReactTooltip place="top" type="dark" effect="float" />
                             <Twitter />
@@ -323,6 +325,7 @@ export default function ActionList({ data, currentPlayingPosition }) {
                             }}
                             target="_blank"
                             title="Share on Facebook"
+                            style={{ color: currentPlayingPosition === 'player' ? 'white' : '#777' }}
                         >
                             <ReactTooltip place="top" type="dark" effect="float" />
                             <Facebook />
@@ -345,6 +348,7 @@ export default function ActionList({ data, currentPlayingPosition }) {
                             }}
                             target="_blank"
                             title="Share on Whatsapp"
+                            style={{ color: currentPlayingPosition === 'player' ? 'white' : '#777' }}
                         >
                             <ReactTooltip place="top" type="dark" effect="float" />
                             <Whatsapp />
@@ -361,13 +365,14 @@ export default function ActionList({ data, currentPlayingPosition }) {
                                 "https://Listen.NurulQuran.com "
                             }
                             title="Share by Email"
+                            style={{ color: currentPlayingPosition === 'player' ? 'white' : '#777' }}
                         >
                             <ReactTooltip place="top" type="dark" effect="float" />
 
                             <Email />
                         </a>
                     </div>
-                </div>
+                )}
             </Box>
             <ToastContainer className="notification-container-copied" />
         </>
