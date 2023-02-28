@@ -85,7 +85,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function ActionList({ data, currentPlayingPosition }) {
-    const classes = useStyles();
     const dispatch = useDispatch();
     const [isDownloaded, setIsDownloaded] = useState(false);
     const { downloadingIds } = useSelector((state) => state.download);
@@ -223,6 +222,7 @@ export default function ActionList({ data, currentPlayingPosition }) {
     }
 
     const sm = useMediaQuery('(max-width:500px)')
+    const w400 = useMediaQuery('(max-width:400px)')
 
     return (
         <>
@@ -306,7 +306,7 @@ export default function ActionList({ data, currentPlayingPosition }) {
                             }}
                             target="_blank"
                             title="Share on Twitter"
-                            style={{ color: currentPlayingPosition === 'player' ? 'white' : '#777' }}
+                            style={{ color: (currentPlayingPosition === 'player' || !w400) ? 'white' : '#777' }}
                         >
                             <ReactTooltip place="top" type="dark" effect="float" />
                             <Twitter />
@@ -325,7 +325,7 @@ export default function ActionList({ data, currentPlayingPosition }) {
                             }}
                             target="_blank"
                             title="Share on Facebook"
-                            style={{ color: currentPlayingPosition === 'player' ? 'white' : '#777' }}
+                            style={{ color: (currentPlayingPosition === 'player' || !w400) ? 'white' : '#777' }}
                         >
                             <ReactTooltip place="top" type="dark" effect="float" />
                             <Facebook />
@@ -348,7 +348,7 @@ export default function ActionList({ data, currentPlayingPosition }) {
                             }}
                             target="_blank"
                             title="Share on Whatsapp"
-                            style={{ color: currentPlayingPosition === 'player' ? 'white' : '#777' }}
+                            style={{ color: (currentPlayingPosition === 'player' || !w400) ? 'white' : '#777' }}
                         >
                             <ReactTooltip place="top" type="dark" effect="float" />
                             <Whatsapp />
@@ -365,7 +365,7 @@ export default function ActionList({ data, currentPlayingPosition }) {
                                 "https://Listen.NurulQuran.com "
                             }
                             title="Share by Email"
-                            style={{ color: currentPlayingPosition === 'player' ? 'white' : '#777' }}
+                            style={{ color: (currentPlayingPosition === 'player' || !w400) ? 'white' : '#777' }}
                         >
                             <ReactTooltip place="top" type="dark" effect="float" />
 
