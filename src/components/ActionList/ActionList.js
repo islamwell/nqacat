@@ -227,20 +227,22 @@ export default function ActionList({ data, currentPlayingPosition }) {
     return (
         <>
             <Box display="flex" alignItems="center" justifyContent="flex-start" gridGap={6} style={{ position: 'relative', marginTop: (sm && currentPlayingPosition !== 'player') ? '-24px' : '' }}>
-                <IconButton
-                    disabled={downloadingIds.includes(id)}
-                    onClick={handleDownload}
-                    size="small"
-                >
-                    <CheckCircleIcon
-                        className="check-cache-icon"
-                        style={
-                            isDownloaded
-                                ? { color: "rgb(16, 180, 102)" }
-                                : { color: "gray" }
-                        }
-                    />
-                </IconButton>
+                {currentPlayingPosition !== "player" && (
+                    <IconButton
+                        disabled={downloadingIds.includes(id)}
+                        onClick={handleDownload}
+                        size="small"
+                    >
+                        <CheckCircleIcon
+                            className="check-cache-icon"
+                            style={
+                                isDownloaded
+                                    ? { color: "rgb(16, 180, 102)" }
+                                    : { color: "gray" }
+                            }
+                        />
+                    </IconButton>
+                )}
                 <IconButton size="small">
                     <a
                         className="download-icon-container"
@@ -293,17 +295,17 @@ export default function ActionList({ data, currentPlayingPosition }) {
                         <a
                             data-tip="Share on Twitter"
                             class="btn-twitter"
-                            href={"https://twitter.com/share?url=" + link}
-                            onClick={(e) => {
-                                window.open(
-                                    "https://twitter.com/share?url=" +
-                                    link +
-                                    "&text=Assalamo alaykum. What do you think of this audio?",
-                                    "Twitter",
-                                    "menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600"
-                                );
-                                return false;
-                            }}
+                            href={`https://twitter.com/share?url=${link}&text=Assalamo alaykum. What do you think of this audio?`}
+                            // onClick={(e) => {
+                            //     window.open(
+                            //         "https://twitter.com/share?url=" +
+                            //         link +
+                            //         "&text=Assalamo alaykum. What do you think of this audio?",
+                            //         "Twitter",
+                            //         "menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600"
+                            //     );
+                            //     return false;
+                            // }}
                             target="_blank"
                             title="Share on Twitter"
                             style={{ color: (currentPlayingPosition === 'player' || !w400) ? 'white' : '#777' }}
@@ -314,15 +316,15 @@ export default function ActionList({ data, currentPlayingPosition }) {
                         <a
                             data-tip="Share on Facebook"
                             class="btn-facebook"
-                            href={"https://www.facebook.com/sharer/sharer.php?u=" + link}
-                            onClick={(e) => {
-                                window.open(
-                                    "https://www.facebook.com/sharer/sharer.php?u=" + link,
-                                    "",
-                                    "menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600"
-                                );
-                                return false;
-                            }}
+                            href={`https://www.facebook.com/sharer/sharer.php?u=${link}`}
+                            // onClick={(e) => {
+                            //     window.open(
+                            //         "https://www.facebook.com/sharer/sharer.php?u=" + link,
+                            //         "",
+                            //         "menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600"
+                            //     );
+                            //     return false;
+                            // }}
                             target="_blank"
                             title="Share on Facebook"
                             style={{ color: (currentPlayingPosition === 'player' || !w400) ? 'white' : '#777' }}
@@ -337,15 +339,15 @@ export default function ActionList({ data, currentPlayingPosition }) {
                                 "https://api.whatsapp.com/send?text=Assalamo alaykum. What do you think of this audio?" +
                                 link
                             }
-                            onClick={(e) => {
-                                window.open(
-                                    "https://api.whatsapp.com/send?text=Assalamo alaykum. What do you think of this audio? " +
-                                    link,
-                                    "",
-                                    "menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600"
-                                );
-                                return false;
-                            }}
+                            // onClick={(e) => {
+                            //     window.open(
+                            //         "https://api.whatsapp.com/send?text=Assalamo alaykum. What do you think of this audio? " +
+                            //         link,
+                            //         "",
+                            //         "menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600"
+                            //     );
+                            //     return false;
+                            // }}
                             target="_blank"
                             title="Share on Whatsapp"
                             style={{ color: (currentPlayingPosition === 'player' || !w400) ? 'white' : '#777' }}
