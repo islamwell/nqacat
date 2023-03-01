@@ -1,6 +1,7 @@
 import { React, useState } from "react";
 import "./Favorite.css";
 import { Box, IconButton } from "@material-ui/core";
+import { alpha } from "@material-ui/core/styles/colorManipulator";
 import Image from "../Image";
 import { makeStyles } from "@material-ui/core/styles";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
@@ -30,6 +31,13 @@ const useStyles = makeStyles((theme) => ({
     cursor: "pointer",
     display: "flex",
     width: "100%",
+  },
+
+  itemContainerCategory: {
+    cursor: "pointer",
+    display: "flex",
+    width: "100%",
+    backgroundColor: alpha(theme.palette.primary.light, 0.4),
   },
 
   image: {
@@ -94,7 +102,7 @@ function Favorite() {
         .reverse()
         .map((item, key) => (
           <Box
-            className={classes.itemContainer}
+            className={item.link == "category-link" ? classes.itemContainerCategory :classes.itemContainer}
             display="flex"
             alignItems="center"
             paddingTop={1}

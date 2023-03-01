@@ -15,6 +15,7 @@ import { useData } from "../../hooks/useData";
 import "./style.css"; // this style for the topchat
 import { fetchTopChart } from "../../store/slices/playerSlice";
 import Favorite from "../../components/Favorite/Favorite";
+import CategorySlider from "../../components/TopChart/CategorySlider";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -49,7 +50,7 @@ export default function Home() {
   const { offlineMode } = useSelector((state) => state.download);
   let { playing, topChart } = useSelector((state) => state.player);
 
-  const { loading, totalPages, currentPage, audioList, changePage } = useData({ offlineMode: offlineMode });
+  const { loading, totalPages, currentPage, audioList, changePage, categoryList } = useData({ offlineMode: offlineMode });
 
   const handleChangePage = (_, page) => {
     changePage(page);
@@ -87,9 +88,12 @@ export default function Home() {
       <Container maxWidth="md" >
         <Grid container spacing={3}   >
           <Grid item xs={12} >
-            <TopChart data={topChart} getMore={getMore} />
+            {/* <TopChart data={topChart} getMore={getMore} /> */}
+            <CategorySlider/>
           </Grid>
-
+          <>
+            
+          </>
           <Grid item xs={12} md={8}>
             <Box className={classes.title} mb={3} ml={1} fontSize="h4.fontSize" fontWeight="fontWeightBold">
               Recently Added

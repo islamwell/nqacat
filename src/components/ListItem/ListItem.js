@@ -139,7 +139,7 @@ export default function ListItem({ data, currentPlayingPosition }) {
       } else {
         player.pause();
       }
-    }
+    } 
   };
 
   useEffect(() => {
@@ -257,9 +257,9 @@ export default function ListItem({ data, currentPlayingPosition }) {
         justifyContent="space-between"
       >
         <Box display="flex" justifyContent="center" alignItems="center">
-          {id === currentPlayingId && (
-            <IconButton onClick={togglePlay} size="small">
-              {playing ? (
+          {/* {id === currentPlayingId && ( */}
+            <IconButton onClick={id === currentPlayingId ? togglePlay : handlePlay} size="small">
+              {(playing && id === currentPlayingId) ? (
                 <PauseCircleOutlineRoundedIcon
                   fontSize="large"
                   style={{ color: "#179992" }}
@@ -271,7 +271,7 @@ export default function ListItem({ data, currentPlayingPosition }) {
                 />
               )}
             </IconButton>
-          )}
+          {/* )} */}
 
           <Box
             onClick={handlePlay}
