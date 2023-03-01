@@ -138,7 +138,7 @@ export default function PrimarySearchAppBar() {
   };
 
   const handleSearch = (e) => {
-      history.push(`/search?${e.target.value}`);
+    history.push(`/search?${e.target.value}`);
   };
 
   const handleHomeButtom = () => {
@@ -146,7 +146,8 @@ export default function PrimarySearchAppBar() {
   };
 
   const handleOffline = async () => {
-      dispatch(downloadAudioList());
+    if (localStorage.getItem("offline_mode") && localStorage.getItem("offline_mode") === 'true') return;
+    dispatch(downloadAudioList());
   };
 
   const handleOnSelect = () => {
@@ -245,10 +246,15 @@ export default function PrimarySearchAppBar() {
                   <Switch color="primary" onClick={handleOffline} checked={offlineMode} />
                 </Box>
               </MenuItem> */}
-              <MenuItem onClick={()=>{history.push("/favorites")
-              handleClose()
+              <MenuItem onClick={() => {
+                history.push("/favorites")
+                handleClose()
               }} button={true}> Favorites </MenuItem>
               <MenuItem button={false}>v{version}</MenuItem>
+              <MenuItem onClick={() => {
+                handleClose();
+                dispatch(downloadAudioList());
+              }} button={true}>Update</MenuItem>
             </Menu>
           </div>
 
