@@ -46,7 +46,7 @@
 }
 .share-btn > .btn-twitter:hover {
   cursor: pointer;
-  color: rgb(29, 161, 245);
+  color: rgb(29, 161, 245) !important;
   background: white;
 }
 
@@ -56,7 +56,7 @@
 }
 .share-btn > .btn-facebook:hover {
   cursor: pointer;
-  color: rgb(66, 103, 178);
+  color: rgb(66, 103, 178) !important;
   background: white;
 }
 
@@ -66,7 +66,7 @@
 }
 .share-btn > .btn-whatsapp:hover {
   cursor: pointer;
-  color: rgb(18, 140, 126);
+  color: rgb(18, 140, 126) !important;
   background: white;
 }
 
@@ -76,7 +76,7 @@
 }
 .share-btn > .btn-email:hover {
   cursor: pointer;
-  color: rgb(66, 100, 170);
+  color: rgb(66, 100, 170) !important;
   background: white;
 }
 .download-icon-container > * {
