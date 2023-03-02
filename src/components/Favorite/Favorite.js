@@ -37,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
     cursor: "pointer",
     display: "flex",
     width: "100%",
-    backgroundColor: alpha(theme.palette.primary.light, 0.4),
+    backgroundColor: "#17999270",
   },
 
   image: {
@@ -102,7 +102,7 @@ function Favorite() {
         .reverse()
         .map((item, key) => (
           <Box
-            className={item.link == "category-link" ? classes.itemContainerCategory :classes.itemContainer}
+            className={item.link === "category-link" ? classes.itemContainerCategory :classes.itemContainer}
             display="flex"
             alignItems="center"
             paddingTop={1}
