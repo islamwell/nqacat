@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import ClickAwayListener from "@material-ui/core/ClickAwayListener";
 import { makeStyles } from "@material-ui/core/styles";
 import { Box, IconButton, Paper, useMediaQuery } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
@@ -23,6 +24,7 @@ import ReactTooltip from "react-tooltip";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import CloseIcon from "@material-ui/icons/Close";
+
 
 import { Image } from "../../components";
 const useStyles = makeStyles((theme) => ({
@@ -224,157 +226,170 @@ export default function ActionList({ data, currentPlayingPosition }) {
     const sm = useMediaQuery('(max-width:500px)')
     const w400 = useMediaQuery('(max-width:400px)')
 
+    const handleClose = () => {
+        setDisplay(false)
+    }
+
     return (
         <>
-            <Box display="flex" alignItems="center" justifyContent="flex-start" gridGap={6} style={{ position: 'relative', marginTop: (sm && currentPlayingPosition !== 'player') ? '-24px' : '' }}>
-                {currentPlayingPosition !== "player" && (
-                    <IconButton
-                        disabled={downloadingIds.includes(id)}
-                        onClick={handleDownload}
-                        size="small"
-                    >
-                        <CheckCircleIcon
-                            className="check-cache-icon"
-                            style={
-                                isDownloaded
-                                    ? { color: "rgb(16, 180, 102)" }
-                                    : { color: "gray" }
-                            }
-                        />
-                    </IconButton>
-                )}
-                <IconButton size="small">
-                    <a
-                        className="download-icon-container"
-                        data-tip="downloading"
-                        // href={`data:${fileType},` + link}
-                        // target="_blank"
-                        // download={name}
-                        onClick={() => {
-                            // notify("downloading")
-                            downloadResource(link, name);
-                        }}
-                    >
-                        <DownloadIcon style={{ color: currentPlayingPosition === "player" ? 'white' : '#777' }} />
-                    </a>
-                </IconButton>
-                <IconButton onClick={handleFavorite} size="small">
-                    <FavoriteBorderIcon
-                        style={
-                            present ? { color: "rgb(240,100,100)" } : { color: currentPlayingPosition === "player" ? "white" : "#777" }
+            <Box display="flex" alignItems="center" justifyContent="flex-start" gridGap={6} style={{ position: 'relative', marginTop: (sm && currentPlayingPosition !== 'player') ? '0px' : '' }}>
+                <ClickAwayListener onClickAway={handleClose}>
+                    <div>
+                        {
+                        (!display) &&
+                        <>
+                            {currentPlayingPosition !== "player" && (
+                                <IconButton
+                                    disabled={downloadingIds.includes(id)}
+                                    onClick={handleDownload}
+                                    size="small"
+                                >
+                                    <CheckCircleIcon
+                                        className="check-cache-icon"
+                                        style={
+                                            isDownloaded
+                                                ? { color: "rgb(16, 180, 102)" }
+                                                : { color: "gray" }
+                                        }
+                                    />
+                                </IconButton>
+                            )}
+                            <IconButton size="small">
+                                <a
+                                    className="download-icon-container"
+                                    data-tip="downloading"
+                                    // href={`data:${fileType},` + link}
+                                    // target="_blank"
+                                    // download={name}
+                                    onClick={() => {
+                                        // notify("downloading")
+                                        downloadResource(link, name);
+                                    }}
+                                >
+                                    <DownloadIcon style={{ color: currentPlayingPosition === "player" ? 'white' : '#777' }} />
+                                </a>
+                            </IconButton>
+                            <IconButton onClick={handleFavorite} size="small">
+                                <FavoriteBorderIcon
+                                    style={
+                                        present ? { color: "rgb(240,100,100)" } : { color: currentPlayingPosition === "player" ? "white" : "#777" }
+                                    }
+                                />
+                            </IconButton>
+                            <IconButton
+                                onClick={() => setDisplay(true)}
+                                size="small"
+                            >
+                                <ShareIcon style={{ color: currentPlayingPosition === "player" ? "white" : "#777" }} />
+                            </IconButton>
+                        </>
                         }
-                    />
-                </IconButton>
-                <IconButton
-                    onClick={() => setDisplay(!display)}
-                    size="small"
-                >
-                    <ShareIcon style={{ color: currentPlayingPosition === "player" ? "white" : "#777" }} />
-                </IconButton>
-                {display && (
-                    <div
-                        className={`share-btn ${currentPlayingPosition !== 'player' ? 'down' : ''}`}
-                    >
-                        <IconButton
-                            data-tip="Copy the link"
-                            className="btn-link"
-                            onClick={(e) => {
-                                notify("Link has been copied");
-                                e.target.style.color = "rgb(29,161,245)";
-                                setTimeout(() => {
-                                    e.target.style.color = "#777";
-                                }, 2000);
-                                navigator.clipboard.writeText(link);
-                            }}
-                            size="small"
-                        >
-                            <ReactTooltip place="top" type="dark" effect="float" />
-                            <LinkIcon />
-                        </IconButton>
+                        {display && (
+                            <div
+                                className={`share-btn ${currentPlayingPosition !== 'player' ? '' : ''}`}
+                            >
+                                <IconButton
+                                    data-tip="Copy the link"
+                                    className="btn-link"
+                                    onClick={(e) => {
+                                        notify("Link has been copied");
+                                        e.target.style.color = "rgb(29,161,245)";
+                                        setTimeout(() => {
+                                            e.target.style.color = "#777";
+                                        }, 2000);
+                                        navigator.clipboard.writeText(link);
+                                    }}
+                                    size="small"
+                                >
+                                    <ReactTooltip place="top" type="dark" effect="float" />
+                                    <LinkIcon />
+                                </IconButton>
 
-                        <a
-                            data-tip="Share on Twitter"
-                            class="btn-twitter"
-                            href={`https://twitter.com/share?url=${link}&text=Assalamo alaykum. What do you think of this audio?`}
-                            // onClick={(e) => {
-                            //     window.open(
-                            //         "https://twitter.com/share?url=" +
-                            //         link +
-                            //         "&text=Assalamo alaykum. What do you think of this audio?",
-                            //         "Twitter",
-                            //         "menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600"
-                            //     );
-                            //     return false;
-                            // }}
-                            target="_blank"
-                            title="Share on Twitter"
-                            style={{ color: (currentPlayingPosition === 'player' || !w400) ? 'white' : '#777' }}
-                        >
-                            <ReactTooltip place="top" type="dark" effect="float" />
-                            <Twitter />
-                        </a>
-                        <a
-                            data-tip="Share on Facebook"
-                            class="btn-facebook"
-                            href={`https://www.facebook.com/sharer/sharer.php?u=${link}`}
-                            // onClick={(e) => {
-                            //     window.open(
-                            //         "https://www.facebook.com/sharer/sharer.php?u=" + link,
-                            //         "",
-                            //         "menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600"
-                            //     );
-                            //     return false;
-                            // }}
-                            target="_blank"
-                            title="Share on Facebook"
-                            style={{ color: (currentPlayingPosition === 'player' || !w400) ? 'white' : '#777' }}
-                        >
-                            <ReactTooltip place="top" type="dark" effect="float" />
-                            <Facebook />
-                        </a>
-                        <a
-                            data-tip="Share on Whatsapp"
-                            class="btn-whatsapp"
-                            href={
-                                "https://api.whatsapp.com/send?text=Assalamo alaykum. What do you think of this audio?" +
-                                link
-                            }
-                            // onClick={(e) => {
-                            //     window.open(
-                            //         "https://api.whatsapp.com/send?text=Assalamo alaykum. What do you think of this audio? " +
-                            //         link,
-                            //         "",
-                            //         "menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600"
-                            //     );
-                            //     return false;
-                            // }}
-                            target="_blank"
-                            title="Share on Whatsapp"
-                            style={{ color: (currentPlayingPosition === 'player' || !w400) ? 'white' : '#777' }}
-                        >
-                            <ReactTooltip place="top" type="dark" effect="float" />
-                            <Whatsapp />
-                        </a>
+                                <a
+                                    data-tip="Share on Twitter"
+                                    class="btn-twitter"
+                                    href={`https://twitter.com/share?url=${link}&text=Assalamo alaykum. What do you think of this audio?`}
+                                    // onClick={(e) => {
+                                    //     window.open(
+                                    //         "https://twitter.com/share?url=" +
+                                    //         link +
+                                    //         "&text=Assalamo alaykum. What do you think of this audio?",
+                                    //         "Twitter",
+                                    //         "menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600"
+                                    //     );
+                                    //     return false;
+                                    // }}
+                                    target="_blank"
+                                    title="Share on Twitter"
+                                    style={{ color: (currentPlayingPosition === 'player' || !w400) ? 'white' : '#777' }}
+                                >
+                                    <ReactTooltip place="top" type="dark" effect="float" />
+                                    <Twitter />
+                                </a>
+                                <a
+                                    data-tip="Share on Facebook"
+                                    class="btn-facebook"
+                                    href={`https://www.facebook.com/sharer/sharer.php?u=${link}`}
+                                    // onClick={(e) => {
+                                    //     window.open(
+                                    //         "https://www.facebook.com/sharer/sharer.php?u=" + link,
+                                    //         "",
+                                    //         "menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600"
+                                    //     );
+                                    //     return false;
+                                    // }}
+                                    target="_blank"
+                                    title="Share on Facebook"
+                                    style={{ color: (currentPlayingPosition === 'player' || !w400) ? 'white' : '#777' }}
+                                >
+                                    <ReactTooltip place="top" type="dark" effect="float" />
+                                    <Facebook />
+                                </a>
+                                <a
+                                    data-tip="Share on Whatsapp"
+                                    class="btn-whatsapp"
+                                    href={
+                                        "https://api.whatsapp.com/send?text=Assalamo alaykum. What do you think of this audio?" +
+                                        link
+                                    }
+                                    // onClick={(e) => {
+                                    //     window.open(
+                                    //         "https://api.whatsapp.com/send?text=Assalamo alaykum. What do you think of this audio? " +
+                                    //         link,
+                                    //         "",
+                                    //         "menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600"
+                                    //     );
+                                    //     return false;
+                                    // }}
+                                    target="_blank"
+                                    title="Share on Whatsapp"
+                                    style={{ color: (currentPlayingPosition === 'player' || !w400) ? 'white' : '#777' }}
+                                >
+                                    <ReactTooltip place="top" type="dark" effect="float" />
+                                    <Whatsapp />
+                                </a>
 
-                        <a
-                            data-tip="Share on Email"
-                            className="btn-email"
-                            href={
-                                "mailto:?subject=Assalamo alaykum. What do you think of this audio?&body=" +
-                                link +
-                                "%0D%0A %0D%0A" +
-                                "More enlightening signs at " +
-                                "https://Listen.NurulQuran.com "
-                            }
-                            title="Share by Email"
-                            style={{ color: (currentPlayingPosition === 'player' || !w400) ? 'white' : '#777' }}
-                        >
-                            <ReactTooltip place="top" type="dark" effect="float" />
+                                <a
+                                    data-tip="Share on Email"
+                                    className="btn-email"
+                                    href={
+                                        "mailto:?subject=Assalamo alaykum. What do you think of this audio?&body=" +
+                                        link +
+                                        "%0D%0A %0D%0A" +
+                                        "More enlightening signs at " +
+                                        "https://Listen.NurulQuran.com "
+                                    }
+                                    title="Share by Email"
+                                    style={{ color: (currentPlayingPosition === 'player' || !w400) ? 'white' : '#777' }}
+                                >
+                                    <ReactTooltip place="top" type="dark" effect="float" />
 
-                            <Email />
-                        </a>
+                                    <Email />
+                                </a>
+                            </div>
+                        )}
                     </div>
-                )}
+                </ClickAwayListener>
             </Box>
             <ToastContainer className="notification-container-copied" />
         </>

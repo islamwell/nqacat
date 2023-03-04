@@ -87,10 +87,10 @@ export default function Home() {
     <div style={playing ? { paddingBottom: 150 } : { paddingBottom: 50 }} className={classes.root}>
       <Container maxWidth="md" >
         <Grid container spacing={3}   >
-          <Grid item xs={12} >
+          {/* <Grid item xs={12} > */}
             {/* <TopChart data={topChart} getMore={getMore} /> */}
-            <CategorySlider/>
-          </Grid>
+            {/* <CategorySlider/>
+          </Grid> */}
           <>
             
           </>

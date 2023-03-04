@@ -9,6 +9,8 @@ import Search from "./containers/search";
 import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
 
 import FavoritePage from "./containers/favoritePage/FavoritePage";
+import {Grid} from "@material-ui/core";
+import CategorySlider from "./components/TopChart/CategorySlider";
 
 const theme = createMuiTheme({
   typography: {
@@ -28,6 +30,7 @@ function App() {
     <ThemeProvider theme={theme}>
       <Router>
         <Layout>
+          
           <Switch>
             <Route path="/category/:category/:subCategoryOne?/:subCategoryTwo?/:subCategoryThree?">
               <Catergory />

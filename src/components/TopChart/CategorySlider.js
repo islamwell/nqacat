@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Box, Button } from "@material-ui/core";
+import { Box, Button, Grid, Paper, Breadcrumbs } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { useDispatch } from "react-redux";
 import { changeURL } from "../../store/slices/playerSlice";
@@ -61,6 +61,22 @@ const useStyles = makeStyles((theme) => ({
       width: 10,
     },
   },
+  categoryContainer: {
+    padding: theme.spacing(2),
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "start",
+    alignItems: "center",
+    borderRadius: 10,
+
+    // [theme.breakpoints.down("sm")]: {
+    //     display: "flex",
+    //     flexDirection: "row",
+    //     justifyContent: "left",
+    //     height: 100,
+    //     alignItems: "center",
+    // },
+},
 }));
 
 
@@ -73,6 +89,7 @@ export default function CategorySlider({ data, getMore }) {
   const [currSubCategory, setCurrSubCategory] = useState({});
   const [history, setHistory] = useState([{id: 0, name: "Home"}]);
   const browserHistory = useHistory();
+  const [isSubCatVisible, setIsSubCatVisible] = useState(true);
 
   const handlePlay = (item) => {
     dispatch(
@@ -107,7 +124,7 @@ export default function CategorySlider({ data, getMore }) {
       {
         breakpoint: 600,
         settings: {
-          slidesToShow: 2,
+          slidesToShow: 3,
           slidesToScroll: 2,
           initialSlide: 2
         }
@@ -115,7 +132,7 @@ export default function CategorySlider({ data, getMore }) {
       {
         breakpoint: 480,
         settings: {
-          slidesToShow: 2,
+          slidesToShow: 3,
           slidesToScroll: 1
         }
       }
@@ -139,8 +156,6 @@ export default function CategorySlider({ data, getMore }) {
   }, [currCategory])
 
   var subCatOnClick = (item) => {
-    console.log("inside on click")
-
     if(item == currSubCategory){
       return
     }
@@ -157,6 +172,7 @@ export default function CategorySlider({ data, getMore }) {
       //setSubCategories([]);
       handleSelectCategory(item);
     }
+    !isSubCatVisible && setIsSubCatVisible(true)
   }
 
   var handleHistoryClick = (item) => {
@@ -171,9 +187,11 @@ export default function CategorySlider({ data, getMore }) {
         setSubCategories(item.subCategories)
       }
     }
+    !isSubCatVisible && setIsSubCatVisible(true)
   }
 
   const handleSelectCategory = ({ id }) => {
+    setIsSubCatVisible(false);
     navigateToCategory(id, browserHistory);
   };
 
@@ -192,7 +210,12 @@ export default function CategorySlider({ data, getMore }) {
             categoryStructure.map((item) => (
               <div className={classes.item} key={item.id}>
                 <Box>
-                  <Image onClick={() => setCurrCategory(item)} src={item.image} className={classes.image}/>
+                  <Image 
+                    onClick={() => {
+                      setCurrCategory(item)
+                      !isSubCatVisible && setIsSubCatVisible(true)
+                    }} 
+                    src={item.image} className={classes.image}/>
                 </Box>
                 <Box textAlign="center" textOverflow="ellipsis" overflow="hidden" py={1} fontSize={12}>
                   {item.name}
@@ -203,41 +226,52 @@ export default function CategorySlider({ data, getMore }) {
           </Slider>
           </div>
       {
-        subCategories.length > 0 ?
+        subCategories.length > 0?
         <>
         <Box className={classes.title} mb={3} ml={1} fontSize="h4.fontSize" fontWeight="fontWeightBold">
-          {
-            history.map((item, idx) => (
-              <span key={`history-${item.id}`}>
-                {idx !== 0 ? ">" : ""}
-                <a>
-                    <Button onClick = {() => handleHistoryClick(item)} className={classes.catLink}>
-                      {item.name}
-                    </Button>
-                </a> 
-              </span>
-            ))
-          }
+          
+            <Breadcrumbs separator=">">
+              {
+                history.map((item, idx) => (
+                  <span key={`history-${item.id}`}>
+                    {/* {idx !== 0 ? ">" : ""} */}
+                    <a>
+                        <Button onClick = {() => handleHistoryClick(item)} className={classes.catLink} textOverflow="ellipsis" overflow="hidden">
+                          {item.name}
+                        </Button>
+                    </a> 
+                  </span>
+                ))
+              }
+            </Breadcrumbs>
+          
         </Box>
+        {
+          isSubCatVisible &&
       <div >
-        <Slider 
+        {/* <Slider  */}
+          <Grid container spacing={2}>
+
+          {/* {...settings} */}
+            {
+              subCategories.map((item) => (
+                <Grid item className={classes.item} key={item.id} xs= {6} lg={3} sm={6} md={4}>
+                  <Paper variant="outlined" className={classes.categoryContainer}>
+                      <Box>
+                        <Image  onClick={() => subCatOnClick(item)} src={item.image} className={classes.image}/>
+                      </Box>
+                      <Box textAlign="center" textOverflow="ellipsis" overflow="hidden" py={1} fontSize={12}>
+                        {item.name}
+                      </Box>  
+                  </Paper>
+                </Grid>
+              ))
+            }
+          </Grid>
           
-        {...settings}>
-          {
-            subCategories.map((item) => (
-              <div className={classes.item} key={item.id}>
-                <Box>
-                  <Image  onClick={() => subCatOnClick(item)} src={item.image} className={classes.image}/>
-                </Box>
-                <Box textAlign="center" textOverflow="ellipsis" overflow="hidden" py={1} fontSize={12}>
-                  {item.name}
-                </Box>
-              </div>
-            ))
-          }
-          
-          </Slider>
+          {/* </Slider> */}
           </div>
+        }
         </> : <></>
       }
       
