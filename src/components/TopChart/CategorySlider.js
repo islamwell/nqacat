@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Box, Button, Grid, Paper, Breadcrumbs } from "@material-ui/core";
+import { Box, Button, Grid, Paper, Breadcrumbs, Link, IconButton } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { useDispatch } from "react-redux";
 import { changeURL } from "../../store/slices/playerSlice";
@@ -10,6 +10,9 @@ import "slick-carousel/slick/slick-theme.css";
 import categoryStructure from "../../data/category-strcture";
 import { useHistory } from "react-router-dom";
 import { navigateToCategory } from "../../helpers/navigateToCategory";
+import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
+import Home from "@material-ui/icons/Home";
+
 
 
 const useStyles = makeStyles((theme) => ({
@@ -55,8 +58,11 @@ const useStyles = makeStyles((theme) => ({
 
   catLink: {
     cursor: "pointer",
-    color: theme.palette.primary.dark,
+    color: "black",
     padding: theme.spacing(0),
+    overflow: "hidden",
+    textOverflow: "ellipses",
+    fontWeight: "bold",
     [theme.breakpoints.down("xs")]: {
       width: 10,
     },
@@ -159,17 +165,23 @@ export default function CategorySlider({ data, getMore }) {
     if(item == currSubCategory){
       return
     }
+    if (history.indexOf(item) === -1){
+      var hist = history; 
+      hist.push(item);
+      setHistory(hist);
+    }
     if(item.subCategories){
       setCurrSubCategory(item);
       setSubCategories(item.subCategories);
-      if (history.indexOf(item) === -1){
-        var hist = history; 
-        hist.push(item);
-        setHistory(hist);
-      }
+      // if (history.indexOf(item) === -1){
+      //   var hist = history; 
+      //   hist.push(item);
+      //   setHistory(hist);
+      // }
     } else{ 
       //DO ROUTING
       //setSubCategories([]);
+      setCurrSubCategory(item);
       handleSelectCategory(item);
     }
     !isSubCatVisible && setIsSubCatVisible(true)
@@ -181,6 +193,7 @@ export default function CategorySlider({ data, getMore }) {
       setSubCategories([])
       setCurrSubCategory({})
       setHistory([history[0]])
+      browserHistory.push('/');
     } else{
       setHistory(history.slice(0,history.indexOf(item)+1))
       if(item.subCategories){
@@ -199,10 +212,10 @@ export default function CategorySlider({ data, getMore }) {
 
   return (
     <div className={classes.root}>
-      <Box className={classes.title} mb={3} ml={1} fontSize="h4.fontSize" fontWeight="fontWeightBold">
+      <Box className={classes.title} mb={1} ml={1} fontSize="h4.fontSize" fontWeight="fontWeightBold">
         Categories
       </Box>
-      <div onClick={getMore}>
+      <div onClick={getMore} >
         <Slider 
           
         {...settings}>
@@ -229,17 +242,22 @@ export default function CategorySlider({ data, getMore }) {
         subCategories.length > 0?
         <>
         <Box className={classes.title} mb={3} ml={1} fontSize="h4.fontSize" fontWeight="fontWeightBold">
-          
-            <Breadcrumbs separator=">">
+            <Breadcrumbs >
               {
                 history.map((item, idx) => (
                   <span key={`history-${item.id}`}>
                     {/* {idx !== 0 ? ">" : ""} */}
-                    <a>
-                        <Button onClick = {() => handleHistoryClick(item)} className={classes.catLink} textOverflow="ellipsis" overflow="hidden">
-                          {item.name}
-                        </Button>
-                    </a> 
+                    
+                    <Link className = {classes.catLink} 
+                      onClick = {
+                        item.id !== currSubCategory.id ? 
+                        () => handleHistoryClick(item) :
+                        () => {}
+                      }
+                      textOverflow="ellipsis" overflow="hidden">
+                      {idx === 0 ? <Home/> : item.name}
+                    </Link>
+
                   </span>
                 ))
               }
@@ -262,7 +280,7 @@ export default function CategorySlider({ data, getMore }) {
                       </Box>
                       <Box textAlign="center" textOverflow="ellipsis" overflow="hidden" py={1} fontSize={12}>
                         {item.name}
-                      </Box>  
+                      </Box>
                   </Paper>
                 </Grid>
               ))

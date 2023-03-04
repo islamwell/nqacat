@@ -1,7 +1,7 @@
 import React from "react";
 import TopBar from "../topBar";
 import Player from "../player";
-import {Grid, Container} from "@material-ui/core";
+import {Container} from "@material-ui/core";
 import CategorySlider from "../../components/TopChart/CategorySlider";
 
 export default function Layout({ children }) {
