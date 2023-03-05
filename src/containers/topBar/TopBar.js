@@ -14,6 +14,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { downloadAudioList } from "../../store/slices/downloadSlice";
 import ArchiveIcon from "@material-ui/icons/Archive";
 import { version } from "../../data/config";
+import { changeSubCatsVisible } from "../../store/slices/favoriteSlice";
 const useStyles = makeStyles((theme) => ({
   grow: {
     flexGrow: 1,
@@ -142,6 +143,13 @@ export default function PrimarySearchAppBar() {
   };
 
   const handleHomeButtom = () => {
+    dispatch(
+      changeSubCatsVisible(
+        {
+          subCatsVisible: false
+        }
+      )
+    )
     history.push("/");
   };
 
