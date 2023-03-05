@@ -6,6 +6,8 @@ import MenuItem from "@material-ui/core/MenuItem";
 import categoryStrcture from "../../data/category-strcture";
 import { useHistory } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
+import { useDispatch } from "react-redux";
+import {changeSubCatsVisible} from "../../store/slices/favoriteSlice";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -21,6 +23,7 @@ const useStyles = makeStyles((theme) => ({
 export default function SimpleMenu() {
   const history = useHistory();
   const classes = useStyles();
+  const dispatch = useDispatch();
 
   return (
     <Grid container style={{ display: "flex" }}>
@@ -33,6 +36,13 @@ export default function SimpleMenu() {
         <MenuItem 
           className={classes.button}
           onClick={() => {
+              dispatch(
+                changeSubCatsVisible(
+                  {
+                    subCatsVisible: false
+                  }
+                )
+              )
               history.push("/favorites")
           }}> 
             Favorites 

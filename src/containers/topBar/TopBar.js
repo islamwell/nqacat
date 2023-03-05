@@ -139,6 +139,13 @@ export default function PrimarySearchAppBar() {
   };
 
   const handleSearch = (e) => {
+    dispatch(
+      changeSubCatsVisible(
+        {
+          subCatsVisible: false
+        }
+      )
+    )
     history.push(`/search?${e.target.value}`);
   };
 
