@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { Box, IconButton, Paper } from "@material-ui/core";
+import { Box, Button, IconButton, Paper } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
 import { addToDowanloadingQueue } from "../../store/slices/downloadSlice";
 import { changeURL } from "../../store/slices/playerSlice";
@@ -84,7 +84,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function ListItem({ data, currentPlayingPosition }) {
+export default function ListItem({ data, currentPlayingPosition, children }) {
   const classes = useStyles();
   const dispatch = useDispatch();
   const [isDownloaded, setIsDownloaded] = useState(false);
@@ -146,14 +146,15 @@ export default function ListItem({ data, currentPlayingPosition }) {
     <Paper variant="outlined" className={classes.mainContainer} style={{ backgruondColor: 'red' }}>
       <Image src={image} className={classes.image} />
       <Box
-        pl={1}
+        px={1}
         py={1}
         display="flex"
         flexDirection="column"
         justifyContent="space-between"
+        width={'100%'}
       >
-        <Box display="flex" justifyContent="center" alignItems="center">
-          {/* {id === currentPlayingId && ( */}
+          <Box display="flex" justifyContent="center" alignItems="center">
+            {/* {id === currentPlayingId && ( */}
             <IconButton onClick={id === currentPlayingId ? togglePlay : handlePlay} size="small">
               {(playing && id === currentPlayingId) ? (
                 <PauseCircleOutlineRoundedIcon
@@ -167,24 +168,24 @@ export default function ListItem({ data, currentPlayingPosition }) {
                 />
               )}
             </IconButton>
-          {/* )} */}
+            {/* )} */}
 
-          <Box
-            onClick={handlePlay}
-            className={classes.title}
-            textAlign="left"
-            fontWeight="fontWeightMedium"
-            fontSize="subtitle2.fontSize"
-            ml={1}
-            pr={1}
-          >
-            {highlightName ? parse(highlightName) : name}
+            <Box
+              onClick={handlePlay}
+              className={classes.title}
+              textAlign="left"
+              fontWeight="fontWeightMedium"
+              fontSize="subtitle2.fontSize"
+              ml={1}
+              pr={1}
+            >
+              {highlightName ? parse(highlightName) : name}
+            </Box>
           </Box>
-        </Box>
 
-        <ActionList data={data} currentPlayingPosition={currentPlayingPosition} />
+        <ActionList data={data} currentPlayingPosition={currentPlayingPosition} children={children} />
       </Box>
-      <ToastContainer className="notification-container-copied" />
+      <ToastContainer autoClose={1000} className="notification-container-copied" />
     </Paper>
   );
 }

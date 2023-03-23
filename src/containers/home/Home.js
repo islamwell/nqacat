@@ -51,7 +51,6 @@ export default function Home() {
   let { playing, topChart } = useSelector((state) => state.player);
 
   const { loading, totalPages, currentPage, audioList, changePage, categoryList } = useData({ offlineMode: offlineMode });
-
   const handleChangePage = (_, page) => {
     changePage(page);
   };
@@ -98,8 +97,8 @@ export default function Home() {
             <Box className={classes.title} mb={3} ml={1} fontSize="h4.fontSize" fontWeight="fontWeightBold">
               Recently Added
             </Box>
-            {audioList.map((item) => {
-              return <ListItem currentPlayingPosition="home" key={item.id} data={item} />;
+            {audioList.map((item, key) => {
+              return <ListItem currentPlayingPosition="home" key={key} data={item} />;
             })}
             {showPagination && (
               <Box py={2} display="flex" justifyContent="flex-end">

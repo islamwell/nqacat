@@ -265,6 +265,10 @@ export default function PrimarySearchAppBar() {
                 history.push("/favorites")
                 handleClose()
               }} button={true}> Favorites </MenuItem>
+              <MenuItem onClick={() => {
+                history.push("/playlist")
+                handleClose()
+              }} button={true}> Playlist </MenuItem>
               <MenuItem button={false}>v{version}</MenuItem>
               <MenuItem onClick={() => {
                 handleClose();
